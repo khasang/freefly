@@ -2,10 +2,9 @@
 <html>
 <head>
     <title>Title</title>
+    ${status}
 </head>
 <body>
-<h1>${message}</h1>
-<h1>${fromcall}</h1>
-<h1>${fromString}</h1>
+
 </body>
 </html>

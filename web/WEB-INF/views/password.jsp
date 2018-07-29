@@ -4,8 +4,7 @@
     <title>Title</title>
 </head>
 <body>
-<h1>${message}</h1>
-<h1>${fromcall}</h1>
-<h1>${fromString}</h1>
+<p>Encoded password for ${password} is: </p>
+<h1>${encodePassword}</h1>
 </body>
 </html>
