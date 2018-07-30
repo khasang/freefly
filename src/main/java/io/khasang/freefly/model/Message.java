@@ -1,14 +1,11 @@
 package io.khasang.freefly.model;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
-@Repository
+@Component
 //@Scope("application")
 public class Message {
     private String info;
