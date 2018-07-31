@@ -47,7 +47,7 @@ public class HibernateConfig {
         properties.setProperty("hibernate.dialect",environment.getRequiredProperty("hibernate.dialect"));
         properties.setProperty("hibernate.show_sql",environment.getRequiredProperty("hibernate.show_sql"));
         properties.setProperty("hibernate.format_sql",environment.getRequiredProperty("hibernate.format_sql"));
-        properties.setProperty("hibernate.hbm2dll.auto",environment.getRequiredProperty("hibernate.hbm2dll.auto"));
+        properties.setProperty("hibernate.hbm2ddl.auto",environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
         properties.setProperty("show_sql",environment.getRequiredProperty("hibernate.show_sql"));
         return properties;
     }
