@@ -1,5 +1,8 @@
 package io.khasang.freefly.config;
 
+import io.khasang.freefly.dao.CatDao;
+import io.khasang.freefly.dao.impl.CatDaoImpl;
+import io.khasang.freefly.entity.Cat;
 import io.khasang.freefly.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -8,24 +11,13 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 
 @Configuration
 @PropertySource(value = "classpath:util.properties")
 @PropertySource(value = "classpath:auth.properties")
 public class AppConfig {
-
-    //-----------------
-/*
-    @Bean
-    public Message message(){
-        return new Message("2е собщение");
-    }
-*/
-    //-----------------
 
     @Autowired
     private Environment environment;
@@ -79,6 +71,11 @@ public class AppConfig {
     @Bean
     public Select forSelect(){
         return new Select(jdbcTemplate());
+    }
+
+    @Bean
+    public CatDao getCatDao(){
+        return new CatDaoImpl(Cat.class);
     }
 
 
