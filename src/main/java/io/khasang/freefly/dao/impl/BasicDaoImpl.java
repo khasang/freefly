@@ -19,7 +19,7 @@ public class BasicDaoImpl<T> implements BasicDao<T> {
     @Autowired
     protected SessionFactory sessionFactory;
 
-    public BasicDaoImpl(Class<T> entityClass){
+    public BasicDaoImpl(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
 
@@ -46,5 +46,27 @@ public class BasicDaoImpl<T> implements BasicDao<T> {
         criteriaQuery.select(root);
 
         return getSession().createQuery(criteriaQuery).list();
+    }
+
+    @Override
+    public T update(T entity) {
+        //    try {
+        getSession().update(entity);
+        return entity;
+        //    } catch (Exception e) {
+        //        System.err.println(e);
+        //        return null;
+        //    }
+    }
+
+    @Override
+    public T delById(long id) {
+        T entity = getById(id);
+        if (entity == null) {
+            return null;
+        } else {
+            getSession().delete(entity);
+            return entity;
+        }
     }
 }

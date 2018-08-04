@@ -47,4 +47,14 @@ public class Cat {
     public void setColorId(int colorId) {
         this.colorId = colorId;
     }
+
+    @Override
+    public String toString() {
+        return "Cat{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", colorId=" + colorId +
+                '}';
+    }
 }

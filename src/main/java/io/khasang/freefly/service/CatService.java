@@ -28,4 +28,20 @@ public interface CatService {
      * @return all cats
      */
     List<Cat> getList();
+
+    /**
+     * method for update cat
+     *
+     * @param cat new date cat
+     * @return updated cat, null if not exists cat: cat.id==id
+     */
+    Cat updateCat(Cat cat);
+
+    /**
+     * method for delete cat
+     *
+     * @param id cat's for delete
+     * @return deleted cat
+     */
+    Cat delCatById(long id);
 }

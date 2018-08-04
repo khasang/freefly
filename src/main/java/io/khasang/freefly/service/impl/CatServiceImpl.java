@@ -28,4 +28,14 @@ public class CatServiceImpl implements CatService {
     public List<Cat> getList() {
         return catDao.getList();
     }
+
+    @Override
+    public Cat updateCat(Cat cat) {
+        return catDao.update(cat);
+    }
+
+    @Override
+    public Cat delCatById(long id) {
+        return catDao.delById(id);
+    }
 }

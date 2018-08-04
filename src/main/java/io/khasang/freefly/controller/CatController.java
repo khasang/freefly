@@ -32,4 +32,17 @@ public class CatController {
     public List<Cat> getAllCats(){
         return catService.getList();
     }
+
+    @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public Cat updateCat(@RequestBody Cat cat) {
+        return catService.updateCat(cat);
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public Cat delCat(@PathVariable(value = "id") String id) {
+        return catService.delCatById(Long.parseLong(id));
+    }
+
 }
