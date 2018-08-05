@@ -27,4 +27,17 @@ public interface CatService {
      * @return cat's list
      */
     List<Cat> getAllCats();
+
+    /**
+     * method for updating cat
+     * @param cat for updating
+     * @return updated cat
+     */
+    Cat updateCat(Cat cat);
+
+    /**
+     * method for deleting cat by id
+     * @param id for deleting
+     */
+    void deleteCatById(long id);
 }
