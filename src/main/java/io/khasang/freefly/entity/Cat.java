@@ -1,6 +1,8 @@
 package io.khasang.freefly.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "cats")
@@ -14,6 +16,17 @@ public class Cat {
     private String description;
     @Column(name = "color_id")
     private int colorId;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<CatWoman> catWomanList = new ArrayList<>();
+
+    public List<CatWoman> getCatWomanList() {
+        return catWomanList;
+    }
+
+    public void setCatWomanList(List<CatWoman> catWomanList) {
+        this.catWomanList = catWomanList;
+    }
 
     public long getId() {
         return id;

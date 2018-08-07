@@ -11,9 +11,14 @@ import java.util.List;
 @Controller
 @RequestMapping("/cat")
 public class CatController {
-    @Autowired
-    private CatService catService;
+    private final CatService catService;
 
+    @Autowired
+    public CatController(CatService catService) {
+        this.catService = catService;
+    }
+
+    // localhost:8080/cat/add?name=Barsik&description=Angry&colorID
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
     public Cat addCat(@RequestBody Cat cat) {

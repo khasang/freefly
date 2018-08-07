@@ -1,7 +1,6 @@
 package io.khasang.freefly.dao.impl;
 
 import io.khasang.freefly.dao.BasicDao;
-import io.khasang.freefly.entity.Cat;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
