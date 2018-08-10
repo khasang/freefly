@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "cats")
-public class Cat {
+@Table(name = "employees")
+public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,19 +14,9 @@ public class Cat {
 
     private String name;
     private String description;
-    @Column(name = "color_id")
-    private int colorId;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<CatWoman> catWomanList = new ArrayList<>();
-
-    public List<CatWoman> getCatWomanList() {
-        return catWomanList;
-    }
-
-    public void setCatWomanList(List<CatWoman> catWomanList) {
-        this.catWomanList = catWomanList;
-    }
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Car> carList = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -52,11 +42,11 @@ public class Cat {
         this.description = description;
     }
 
-    public int getColorId() {
-        return colorId;
+    public List<Car> getCarList() {
+        return carList;
     }
 
-    public void setColorId(int colorId) {
-        this.colorId = colorId;
+    public void setCarList(List<Car> carList) {
+        this.carList = carList;
     }
 }
