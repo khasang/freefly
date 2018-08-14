@@ -18,7 +18,6 @@ public class CatController {
         this.catService = catService;
     }
 
-    // localhost:8080/cat/add?name=Barsik&description=Angry&colorID
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
     public Cat addCat(@RequestBody Cat cat) {
