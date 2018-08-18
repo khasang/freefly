@@ -7,6 +7,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,6 +21,7 @@ public class CatControllerIntegrationTest {
     private final static String ROOT = "http://localhost:8080/cat";
     private final static String ADD = "/add";
     private final static String GET_BY_ID = "/get";
+    private final static String ALL = "/all";
 
 
     @Before
@@ -43,6 +45,26 @@ public class CatControllerIntegrationTest {
 
         assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
         assertNotNull(responseEntity.getBody());
+    }
+
+    @Test
+    public void checkGetAllCats() {
+        createCat();
+        createCat();
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<List<Cat>> responseEntity = restTemplate.exchange(
+                ROOT + GET_BY_ID + ALL,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Cat>>() {
+                }
+        );
+
+        List<Cat> cats = responseEntity.getBody();
+        assertNotNull(cats.get(0));
+        assertNotNull(cats.get(1));
     }
 
     private Cat createCat() {

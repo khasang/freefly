@@ -17,7 +17,7 @@ public class Car {
     @Column(columnDefinition = "DATE")
     private LocalDate year;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "carList" )
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "carList")
     private List<Employee> employeeList = new ArrayList<>();
 
     public Long getId() {

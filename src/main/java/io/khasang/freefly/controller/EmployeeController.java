@@ -1,5 +1,6 @@
 package io.khasang.freefly.controller;
 
+import io.khasang.freefly.dto.EmployeeDTO;
 import io.khasang.freefly.entity.Employee;
 import io.khasang.freefly.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +27,14 @@ public class EmployeeController {
 
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
     @ResponseBody
-    public Employee getEmployeeById(@PathVariable(value = "id") String id) {
-        return employeeService.getEmployeeById(Long.parseLong(id));
+    public EmployeeDTO getEmployeeById(@PathVariable(value = "id") String id) {
+        return employeeService.getEmployeeDTOById(Long.parseLong(id));
     }
 
     @RequestMapping(value = "/get/all", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
     @ResponseBody
-    public List<Employee> getAllEmployees() {
-        return employeeService.getAllEmployees();
+    public List<EmployeeDTO> getAllEmployees() {
+        return employeeService.getAllEmployeesDTO();
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json;charset=utf-8")

@@ -1,5 +1,6 @@
 package io.khasang.freefly.service;
 
+import io.khasang.freefly.dto.EmployeeDTO;
 import io.khasang.freefly.entity.Employee;
 
 import java.util.List;
@@ -19,14 +20,14 @@ public interface EmployeeService {
      * @param id - employee's id
      * @return employee by id
      */
-    Employee getEmployeeById(long id);
+    EmployeeDTO getEmployeeDTOById(long id);
 
     /**
      * method for getting all employees
      *
      * @return employee's list
      */
-    List<Employee> getAllEmployees();
+    List<EmployeeDTO> getAllEmployeesDTO();
 
     /**
      * method for update employee

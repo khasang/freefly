@@ -1,8 +1,8 @@
 package io.khasang.freefly.controller;
 
+import io.khasang.freefly.dto.EmployeeDTO;
 import io.khasang.freefly.entity.Car;
 import io.khasang.freefly.entity.Employee;
-import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
@@ -24,11 +24,11 @@ public class EmployeeControllerIntegrationTest {
         Employee employee = createEmployee();
 
         RestTemplate template = new RestTemplate();
-        ResponseEntity<Employee> responseEntity = template.exchange(
+        ResponseEntity<EmployeeDTO> responseEntity = template.exchange(
                 ROOT + GET_BY_ID + "/{id}",
                 HttpMethod.GET,
                 null,
-                Employee.class,
+                EmployeeDTO.class,
                 employee.getId()
         );
 
@@ -53,9 +53,10 @@ public class EmployeeControllerIntegrationTest {
 
         assertNotNull(createdEmployee);
         assertEquals(employee.getName(), createdEmployee.getName());
-        return createdEmployee;
 
+        return createdEmployee;
     }
+
 
     private Employee prefillEmployee() {
         Employee employee = new Employee();
