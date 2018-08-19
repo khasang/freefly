@@ -29,4 +29,4 @@ public static void main(String[] args) {
     
 [google.ru](http://google.ru)
 
-!! [text](https://cdn2.img.ria.ru/images/148393/86/1483938656.jpg)
+[text](https://cdn2.img.ria.ru/images/148393/86/1483938656.jpg)
