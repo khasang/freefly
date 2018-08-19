@@ -28,5 +28,4 @@ public static void main(String[] args) {
     2. SubElement2
     
 [google.ru](http://google.ru)
-
-[text](https://cdn2.img.ria.ru/images/148393/86/1483938656.jpg)
+![text](https://cdn2.img.ria.ru/images/148393/86/1483938656.jpg)
