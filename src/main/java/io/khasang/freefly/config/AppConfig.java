@@ -1,8 +1,14 @@
 package io.khasang.freefly.config;
 
 import io.khasang.freefly.dao.CatDao;
+import io.khasang.freefly.dao.EmployeeDao;
+import io.khasang.freefly.dao.HumanDao;
 import io.khasang.freefly.dao.impl.CatDaoImpl;
+import io.khasang.freefly.dao.impl.EmployeeDaoImpl;
+import io.khasang.freefly.dao.impl.HumanDaoImpl;
 import io.khasang.freefly.entity.Cat;
+import io.khasang.freefly.entity.Employee;
+import io.khasang.freefly.entity.Human;
 import io.khasang.freefly.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -33,49 +39,58 @@ public class AppConfig {
     }
 
     @Bean
-    public JdbcTemplate jdbcTemplate(){
+    public JdbcTemplate jdbcTemplate() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource());
         return jdbcTemplate;
     }
 
     @Bean
-    public UserDetailsService userDetailsService(){
+    public UserDetailsService userDetailsService() {
         JdbcDaoImpl jdbcDao = new JdbcDaoImpl();
         jdbcDao.setDataSource(dataSource());
         jdbcDao.setUsersByUsernameQuery(environment.getRequiredProperty("userByQuery"));
         jdbcDao.setAuthoritiesByUsernameQuery(environment.getRequiredProperty("roleByQuery"));
         return jdbcDao;
-
     }
 
     @Bean
-    public CreateTable createTable(){
+    public CreateTable createTable() {
         return new CreateTable(jdbcTemplate());
     }
 
     @Bean
-    public InsertRow insertRow(){
+    public InsertRow insertRow() {
         return new InsertRow(jdbcTemplate());
     }
 
     @Bean
-    public DeleteRow deletetRow(){
+    public DeleteRow deleteRow() {
         return new DeleteRow(jdbcTemplate());
     }
 
     @Bean
-    public UpdateRow updateRow(){
+    public UpdateRow updateRow() {
         return new UpdateRow(jdbcTemplate());
     }
 
     @Bean
-    public Select forSelect(){
+    public Select forSelect() {
         return new Select(jdbcTemplate());
     }
 
     @Bean
-    public CatDao getCatDao(){
+    public CatDao getCatDao() {
         return new CatDaoImpl(Cat.class);
+    }
+
+    @Bean
+    public HumanDao getHumanDao() {
+        return new HumanDaoImpl(Human.class);
+    }
+
+    @Bean
+    public EmployeeDao getEmpoyeeDao() {
+        return new EmployeeDaoImpl(Employee.class);
     }
 
 

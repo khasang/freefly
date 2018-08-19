@@ -50,13 +50,8 @@ public class BasicDaoImpl<T> implements BasicDao<T> {
 
     @Override
     public T update(T entity) {
-        //    try {
         getSession().update(entity);
         return entity;
-        //    } catch (Exception e) {
-        //        System.err.println(e);
-        //        return null;
-        //    }
     }
 
     @Override

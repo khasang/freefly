@@ -34,7 +34,9 @@ public interface BasicDao<T> {
      *
      * @param entity - new data for entity
      * @return updated entity.
-     */
+     * warninig - if not exists specific entity, the method do nothing and return specific entity
+     * for check exists entity use getById(long)
+     * */
     T update(T entity);
 
     /**

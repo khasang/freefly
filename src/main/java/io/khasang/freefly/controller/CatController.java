@@ -21,13 +21,13 @@ public class CatController {
         return  catService.addCat(cat);
     }
 
-    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET, produces = "application/json;charaster=utf-8")
+    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
     @ResponseBody
     public Cat getCatById(@PathVariable(value = "id") String id){
         return catService.getCatById(Long.parseLong(id));
     }
 
-    @RequestMapping(value = "/get/all", method = RequestMethod.GET, produces = "application/json;charaster=utf-8")
+    @RequestMapping(value = "/get/all", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
     @ResponseBody
     public List<Cat> getAllCats(){
         return catService.getList();
@@ -36,6 +36,12 @@ public class CatController {
     @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json;charset=utf-8")
     @ResponseBody
     public Cat updateCat(@RequestBody Cat cat) {
+        return catService.updateCat(cat);
+    }
+
+    @RequestMapping(value = "/update2", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public Cat updateCat2AcrossPostMethod(@RequestBody Cat cat) {
         return catService.updateCat(cat);
     }
 
