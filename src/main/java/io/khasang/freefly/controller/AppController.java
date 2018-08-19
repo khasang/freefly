@@ -6,9 +6,13 @@ import io.khasang.freefly.model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 //controller MVC
 @Controller
@@ -37,6 +41,26 @@ public class AppController {
     public String CreateTableStatus(Model model){
         model.addAttribute("status", createTable.create());
         return "create";
+    }
+
+    @RequestMapping("/admin")
+    public String getSecurePage(Model model){
+        model.addAttribute("secure", "Very secure content");
+        return "secure";
+    }
+
+    @Secured("ROLE_ADMIN")
+    @RequestMapping("/adm")
+    public String getSecurePage2(Model model){
+        model.addAttribute("secure", "Very secure content");
+        return "secure";
+    }
+
+    @RequestMapping(value = "/password/{password}", method = RequestMethod.GET)
+    public String getCryptPassword(@PathVariable("password") String password, Model model){
+        model.addAttribute("password", password);
+        model.addAttribute("encodePassword", new BCryptPasswordEncoder().encode(password));
+        return "password";
     }
 
 }
