@@ -39,7 +39,7 @@ public interface OrderService {
      * @param id order's for delete
      * @return deleted order's orderDTO. return null if not existed order with specific id
      */
-    OrderDTO deleteOrderDTOById(long id);
+    OrderDTO deleteOrderById(long id);
 
     /**
      * method for getting ordersDTO for all orders

@@ -44,7 +44,7 @@ public class OrderController {
     @ResponseBody
     @RequestMapping(value = OrderController.DELETE_BY_ID, method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public OrderDTO deleteOrderById(@PathVariable (name = "id") long id){
-        return orderService.deleteOrderDTOById(id);
+        return orderService.deleteOrderById(id);
     }
 
     @ResponseBody

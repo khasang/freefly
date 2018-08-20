@@ -40,7 +40,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDTO deleteOrderDTOById(long id) {
+    public OrderDTO deleteOrderById(long id) {
         Order order = orderDao.deleteById(id);
         if (order != null) {
             return getDTOfromOrder(order);
