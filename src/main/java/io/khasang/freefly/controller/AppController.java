@@ -31,10 +31,10 @@ public class AppController {
     }
 
     @RequestMapping("/")
-    public String getHelloPage(Model model) {
-        model.addAttribute("message", message.getInfo());
-        model.addAttribute("call", callImpl.getInfo());
-        return "hello";
+    public String getHelloPage() {
+//        model.addAttribute("message", message.getInfo());
+//        model.addAttribute("call", callImpl.getInfo());
+        return "cat";
     }
 
     @RequestMapping("/create")
