@@ -31,7 +31,6 @@ public class UserDTO {
 
             userDTOList.add(userDTO);
         }
-
         return userDTOList;
     }
 

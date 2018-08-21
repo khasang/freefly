@@ -11,7 +11,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-
 @Transactional
 public class BasicDaoImpl<T> implements BasicDao<T> {
     private final Class<T> entityClass;
