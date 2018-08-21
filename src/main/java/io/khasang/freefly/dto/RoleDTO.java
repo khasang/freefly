@@ -11,7 +11,6 @@ public class RoleDTO {
     private Long id;
     private String name;
 
-
     public List<RoleDTO> getRoleDTOList(List<Role> roleList) {
         List<RoleDTO> roleDTOList = new ArrayList<>();
 
