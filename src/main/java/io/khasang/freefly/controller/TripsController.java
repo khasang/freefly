@@ -24,7 +24,7 @@ public class TripsController {
         return tripsService.addTrips(trips);
     }
 
-    @RequestMapping(value = "/get/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
     @ResponseBody
     public Trips getTripsById(@PathVariable(value = "id") String id) {
         return tripsService.getTripsById(Long.parseLong(id));
