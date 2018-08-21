@@ -83,7 +83,7 @@ public class NotificationTypesControllerIntegretionTest {
         NotificationTypes notificationTypes = new NotificationTypes();
         notificationTypes.setNameType("RemindThreeDays");
         notificationTypes.setDescription("Reminding about consumed flight before three days");
-        notificationTypes.setTestNotification("Your flight goes in tree days!");
+        notificationTypes.setTextNotification("Your flight goes in tree days!");
 
         return notificationTypes;
     }
