@@ -1,8 +1,7 @@
 package io.khasang.freefly.controller;
 
-import io.khasang.freefly.entity.Cat;
 import io.khasang.freefly.entity.NotificationTypes;
-import io.khasang.freefly.service.CatService;
+
 import io.khasang.freefly.service.NotificationTypesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +20,6 @@ public class NotificationTypesController {
         this.notificationTypesService = notificationTypesService;
     }
 
-    // localhost:8080/cat/add?name=Barsik&description=Angry&colorID
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
     public NotificationTypes addNotificationTypes(@RequestBody NotificationTypes notificationTypes) {

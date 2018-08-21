@@ -16,7 +16,7 @@ public class NotificationTypes {
     private String description;
 
     @Column(name = "text_notification")
-    private String testNotification;
+    private String textNotification;
 
     public Long getId() {
         return id;
@@ -42,11 +42,11 @@ public class NotificationTypes {
         this.description = description;
     }
 
-    public String getTestNotification() {
-        return testNotification;
+    public String getTextNotification() {
+        return textNotification;
     }
 
-    public void setTestNotification(String testNotification) {
-        this.testNotification = testNotification;
+    public void setTextNotification(String textNotification) {
+        this.textNotification = textNotification;
     }
 }
