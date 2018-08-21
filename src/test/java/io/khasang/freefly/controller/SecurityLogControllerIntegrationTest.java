@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 public class SecurityLogControllerIntegrationTest {
 
-    private final static String ROOT = "http://localhost:8080/logs";
+    private final static String ROOT = "http://localhost:8080/securitylog";
     private final static String ADD = "/add";
     private final static String GET_BY_ID = "/get";
     private final static String DELETE_BY_ID = "/delete";
@@ -52,7 +52,7 @@ public class SecurityLogControllerIntegrationTest {
         RestTemplate template = new RestTemplate();
         SecurityLog createdSecurityLog = template.exchange(
                 ROOT + ADD,
-                HttpMethod.GET,
+                HttpMethod.POST,
                 entity,
                 SecurityLog.class
         ).getBody();
