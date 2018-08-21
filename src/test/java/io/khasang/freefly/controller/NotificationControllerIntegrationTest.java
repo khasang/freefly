@@ -14,7 +14,6 @@ public class NotificationControllerIntegrationTest {
     private final static String ADD = "/add";
     private final static String GET_BY_ID = "/get";
 
-
     @Test
     public void addNotification() {
         Notification notification = createNotification();

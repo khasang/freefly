@@ -1,7 +1,6 @@
 package io.khasang.freefly.dto;
 
 import org.springframework.stereotype.Component;
-
 import java.time.LocalTime;
 
 @Component

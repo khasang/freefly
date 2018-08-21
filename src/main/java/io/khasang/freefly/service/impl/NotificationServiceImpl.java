@@ -38,6 +38,5 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public void deleteNotification(Notification notification) {
         notificationDao.delete(notification);
-
     }
 }
