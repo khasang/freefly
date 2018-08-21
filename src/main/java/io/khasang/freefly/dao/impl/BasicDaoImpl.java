@@ -47,4 +47,14 @@ public class BasicDaoImpl<T> implements BasicDao<T> {
     private Session getSessionFactory() {
         return sessionFactory.getCurrentSession();
     }
+
+    @Override
+    public T update(T entity) {
+        return null;
+    }
+
+    @Override
+    public void deleteById(long id) {
+
+    }
 }
