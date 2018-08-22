@@ -3,7 +3,6 @@ package io.khasang.freefly.entity;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-
 @Entity
 @Table(name = "trips")
 public class Trips {
@@ -12,8 +11,8 @@ public class Trips {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private String departure; //место отправления
-    private String destination; //место назначения
+    private String departure;
+    private String destination;
     @Column(name = "date_departure")
     private LocalDate dateDeparture;
     private String price;

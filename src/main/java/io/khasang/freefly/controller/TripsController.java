@@ -47,5 +47,4 @@ public class TripsController {
     public void deleteTripsById(@PathVariable(value = "id") String id) {
         tripsService.deleteTripsById(Long.parseLong(id));
     }
-
 }

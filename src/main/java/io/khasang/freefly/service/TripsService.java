@@ -36,7 +36,6 @@ public interface TripsService {
      */
     Trips updateTrips(Trips trips);
 
-
     /**
      * method for delete trips by specific id
      *

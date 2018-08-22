@@ -19,11 +19,6 @@ public class TripsControllerIntegrationTest {
     private final static String ADD = "/add";
     private final static String GET_BY_ID = "/get";
 
-    @Before
-    public void setup() {
-
-    }
-
     @Test
     public void addTrips() {
         Trips trips = createTrips();
@@ -58,7 +53,6 @@ public class TripsControllerIntegrationTest {
         ).getBody();
 
         assertNotNull(createdTrips);
-
         return createdTrips;
     }
 
@@ -69,11 +63,5 @@ public class TripsControllerIntegrationTest {
         trips.setPrice("1000");
         trips.setDateDeparture(LocalDate.of(2018, 10, 25));
         return trips;
-    }
-
-
-    @After
-    public void clean() {
-
     }
 }

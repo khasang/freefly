@@ -4,8 +4,8 @@ import java.time.LocalDate;
 
 public class TripsDTO {
     private Long id;
-    private String departure; //место отправления
-    private String destination; //место назначения
+    private String departure;
+    private String destination;
     private LocalDate dateDeparture;
     private String price;
 
