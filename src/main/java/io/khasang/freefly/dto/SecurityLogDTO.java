@@ -23,5 +23,4 @@ public class SecurityLogDTO {
     }
 
     private LocalDate date;
-
 }
