@@ -20,11 +20,6 @@ public class SecurityLogControllerIntegrationTest {
     private final static String GET_BY_ID = "/get";
     private final static String DELETE_BY_ID = "/delete";
 
-    @Before
-    public void setup() {
-
-    }
-
     @Test
     public void addSecurityLog() {
         SecurityLog securityLog = createSecurityLog();
@@ -38,7 +33,7 @@ public class SecurityLogControllerIntegrationTest {
                 securityLog.getId()
         );
 
-        assertEquals("Ok", responseEntity.getStatusCode().getReasonPhrase());
+        assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
         assertNotNull(responseEntity.getBody());
     }
 
@@ -58,7 +53,6 @@ public class SecurityLogControllerIntegrationTest {
         ).getBody();
 
         assertNotNull(createdSecurityLog);
-
         return createdSecurityLog;
     }
 
@@ -67,10 +61,5 @@ public class SecurityLogControllerIntegrationTest {
         securityLog.setDate(LocalDate.of(2018, 2,17));
 
         return securityLog;
-    }
-
-    @After
-    public void clean() {
-
     }
 }

@@ -22,15 +22,15 @@ public class SecurityLogController {
         return securityLogService.addSecurityLog(securityLog);
     }
 
-    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-    @ResponseBody
-    public SecurityLog getSecurityLogById(@PathVariable(value = "id") String id) {
-        return securityLogService.getSecurityLogById(Long.parseLong(id));
-    }
-
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=utf-8")
     @ResponseBody
     public void deleteSecurityLogById(@PathVariable(value = "id") String id) {
         securityLogService.deleteSecurityLogById(Long.parseLong(id));
+    }
+
+    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public SecurityLog getSecurityLogById(@PathVariable(value = "id") String id) {
+        return securityLogService.getSecurityLogById(Long.parseLong(id));
     }
 }
