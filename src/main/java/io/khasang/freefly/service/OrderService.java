@@ -1,7 +1,6 @@
 package io.khasang.freefly.service;
 
 import io.khasang.freefly.dto.OrderDTO;
-import io.khasang.freefly.entity.Order;
 
 import java.util.List;
 
@@ -18,7 +17,7 @@ public interface OrderService {
      * method for getting orderDTO by specific order's id
      *
      * @param id - order's id
-     * @return orderDTO for certain order. return null if not exists order with specific id
+     * @return orderDTO for certain order
      */
     OrderDTO getOrderDTOById(long id);
 
@@ -27,9 +26,6 @@ public interface OrderService {
      *
      * @param orderDTO - orderDTO for updating order
      * @return orderDTO for updated order
-     * <p>
-     * Warning: if not exists order in repository, the method do nothing, but return specific orderDTO
-     * For check exists specific order use @link io.khasang.freefly.service.OrderService#getOrderDTOById
      */
     OrderDTO updateOrder(OrderDTO orderDTO);
 
@@ -37,7 +33,7 @@ public interface OrderService {
      * method for delete orders by specific id
      *
      * @param id order's for delete
-     * @return deleted order's orderDTO. return null if not existed order with specific id
+     * @return deleted order's orderDTO
      */
     OrderDTO deleteOrderById(long id);
 

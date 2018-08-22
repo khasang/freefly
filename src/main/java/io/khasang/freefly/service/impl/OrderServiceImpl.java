@@ -4,75 +4,58 @@ import io.khasang.freefly.dao.OrderDao;
 import io.khasang.freefly.dto.OrderDTO;
 import io.khasang.freefly.entity.Order;
 import io.khasang.freefly.service.OrderService;
+import io.khasang.freefly.dto.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
-    OrderDao orderDao;
+    private OrderDao orderDao;
+
+    @Autowired
+    private Util util;
 
     @Override
     public OrderDTO addOrder(OrderDTO orderDTO) {
-        Order order = getOrderFromDTO(orderDTO);
-        Order createdOrder = orderDao.create(order);
-        return getDTOfromOrder(createdOrder);
+        return util.getDTOFromOrder(orderDao.create(util.getOrderFromDTO(orderDTO)));
     }
 
     @Override
     public OrderDTO getOrderDTOById(long id) {
-        Order order = orderDao.getById(id);
-        if (order != null) {
-            return getDTOfromOrder(order);
-        } else {
-            return null;
+        if (Objects.nonNull(orderDao.getById(id))) {
+            return util.getDTOFromOrder(orderDao.getById(id));
         }
+
+        throw new IllegalArgumentException("order with id = " + id + " not exists");
     }
 
     @Override
     public OrderDTO updateOrder(OrderDTO orderDTO) {
-        orderDao.update(getOrderFromDTO(orderDTO));
+        orderDao.update(util.getOrderFromDTO(orderDTO));
         return orderDTO;
     }
 
     @Override
     public OrderDTO deleteOrderById(long id) {
-        Order order = orderDao.deleteById(id);
-        if (order != null) {
-            return getDTOfromOrder(order);
-        } else {
-            return null;
+        if (Objects.nonNull(orderDao.getById(id))){
+            return util.getDTOFromOrder(orderDao.delete(orderDao.getById(id)));
         }
+
+        throw new IllegalArgumentException("order with id = " + id + " not exists");
     }
 
     @Override
     public List<OrderDTO> getAllOrdersDTO() {
         List<OrderDTO> orderDTOList = new ArrayList<>();
         for (Order order : orderDao.getList()) {
-            orderDTOList.add(getDTOfromOrder(order));
+            orderDTOList.add(util.getDTOFromOrder(order));
         }
         return orderDTOList;
-    }
-
-    private Order getOrderFromDTO(OrderDTO orderDTO){
-        Order order = new Order();
-        order.setId(orderDTO.getId());
-        order.setDescription(orderDTO.getDescription());
-        order.setCreated(orderDTO.getCreated());
-        order.setUpdated(orderDTO.getUpdated());
-        return order;
-    }
-
-    private OrderDTO getDTOfromOrder(Order order){
-        OrderDTO orderDTO = new OrderDTO();
-        orderDTO.setId(order.getId());
-        orderDTO.setDescription(order.getDescription());
-        orderDTO.setCreated(order.getCreated());
-        orderDTO.setUpdated(order.getUpdated());
-        return orderDTO;
     }
 }

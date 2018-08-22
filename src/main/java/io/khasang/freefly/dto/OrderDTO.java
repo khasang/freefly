@@ -7,8 +7,8 @@ public class OrderDTO {
 
     private Long id;
     private String description;
-    private LocalDate created;
-    private LocalDate updated;
+    private LocalDate creationDate;
+    private LocalDate modificationDate;
 
     public OrderDTO() {
     }
@@ -29,20 +29,20 @@ public class OrderDTO {
         this.description = description;
     }
 
-    public LocalDate getCreated() {
-        return created;
+    public LocalDate getCreationDate() {
+        return creationDate;
     }
 
-    public void setCreated(LocalDate created) {
-        this.created = created;
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
     }
 
-    public LocalDate getUpdated() {
-        return updated;
+    public LocalDate getModificationDate() {
+        return modificationDate;
     }
 
-    public void setUpdated(LocalDate updated) {
-        this.updated = updated;
+    public void setModificationDate(LocalDate modificationDate) {
+        this.modificationDate = modificationDate;
     }
 
     @Override
@@ -52,13 +52,12 @@ public class OrderDTO {
         OrderDTO orderDTO = (OrderDTO) o;
         return Objects.equals(id, orderDTO.id) &&
                 Objects.equals(description, orderDTO.description) &&
-                Objects.equals(created, orderDTO.created) &&
-                Objects.equals(updated, orderDTO.updated);
+                Objects.equals(creationDate, orderDTO.creationDate) &&
+                Objects.equals(modificationDate, orderDTO.modificationDate);
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(id, description, created, updated);
+        return Objects.hash(id, description, creationDate, modificationDate);
     }
 }

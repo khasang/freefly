@@ -17,8 +17,8 @@ public interface OrderDao extends BasicDao<Order> {
     /**
      * method for delete order
      *
-     * @param id order's id, which need delete
-     * @return deleted order. return null if not existed entity with specific id
+     * @param entity order, which need delete
+     * @return deleted order.
      */
-    Order deleteById(long id);
+    Order delete(Order entity);
 }

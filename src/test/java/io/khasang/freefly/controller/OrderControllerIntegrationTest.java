@@ -13,7 +13,12 @@ import static org.junit.Assert.*;
 
 public class OrderControllerIntegrationTest {
 
-    private static final String ROOT_APP = "http://localhost:8080";
+    private static final String ROOT = "http://localhost:8080/order";
+    private static final String ADD = "/add";
+    private static final String GET_BY_ID = "/get/{id}";
+    private static final String UPDATE = "/update";
+    private static final String DELETE_BY_ID = "/delete/{id}";
+    private static final String GET_ALL = "/get/all";
 
     /**
      * integration test OrderController's methods:
@@ -25,51 +30,30 @@ public class OrderControllerIntegrationTest {
      * 3.update created order
      * 4.getting updated order's DTO, check field's values
      * 5.delete created order
-     * 6.search orderDTO by deleted order's id
      */
     @Test
-    public void complexOrderControllerTest() {
-        String description = "Тестовое описание";
+    public void testCRUD() {
+        String description = "test description";
         LocalDate created = LocalDate.of(2017, 03, 05);
         LocalDate updated = LocalDate.of(2018, 01, 23);
-        OrderDTO createdOrderDTO = null;
-        OrderDTO orderDTOFromDB = null;
-        try {
-            //1.adding new order, check field's values
-            createdOrderDTO = createOrder(description, created, updated);
-            assertNotNull(createdOrderDTO.getId());
-            checkFields(createdOrderDTO, description, created, updated);
 
-            //2.getting created order by id, check result
-            orderDTOFromDB = getOrderDTO(createdOrderDTO.getId());
-            assertNotNull(orderDTOFromDB.getId());
-            checkFields(orderDTOFromDB, description, created, updated);
+        OrderDTO createdOrderDTO = createOrder(description, created, updated);
 
-            //3.update created order
-            description = "Обновленное тестовое описание";
-            created = LocalDate.of(2017, 12, 12);
-            updated = LocalDate.of(2017, 12, 23);
-            createdOrderDTO.setDescription(description);
-            createdOrderDTO.setCreated(created);
-            createdOrderDTO.setUpdated(updated);
-            OrderDTO updatedOrderDTO = updateOrder(createdOrderDTO);
-            checkFields(updatedOrderDTO, description, created, updated);
+        OrderDTO orderDTOFromDB = getOrderDTO(createdOrderDTO.getId());
+        checkFields(orderDTOFromDB, description, created, updated);
 
-            //4.getting updated order by id, check field's values
-            orderDTOFromDB = getOrderDTO(createdOrderDTO.getId());
-            checkFields(orderDTOFromDB, description, created, updated);
-        } finally {
-            if (createdOrderDTO.getId() != null) {
-                //5.delete created order
-                OrderDTO deletedOrderDTO = deleteOrder(createdOrderDTO.getId());
-                assertNotNull(deletedOrderDTO.getId());
-                checkFields(deletedOrderDTO, description, created, updated);
+        description = "updated test description";
+        created = LocalDate.of(2017, 12, 12);
+        updated = LocalDate.of(2017, 12, 23);
+        alterFields(createdOrderDTO, description, created, updated);
+        updateOrder(createdOrderDTO);
 
-                //6.search order by deleted order's id
-                orderDTOFromDB = getOrderDTO(createdOrderDTO.getId());
-                assertNull("order must not exist in db after delete", orderDTOFromDB);
-            }
-        }
+        orderDTOFromDB = getOrderDTO(createdOrderDTO.getId());
+        checkFields(orderDTOFromDB, description, created, updated);
+
+        OrderDTO deletedOrderDTO = deleteOrder(createdOrderDTO.getId());
+        assertNotNull(deletedOrderDTO.getId());
+        checkFields(deletedOrderDTO, description, created, updated);
     }
 
     /**
@@ -84,120 +68,140 @@ public class OrderControllerIntegrationTest {
     @Test
     public void testGettingAllOrders() {
         OrderDTO orderDTO1 = prefillOrderDTO(
-                "описание1",
+                "description",
                 LocalDate.of(2012, 12, 12),
                 LocalDate.of(2014, 11, 12));
         OrderDTO orderDTO2 = prefillOrderDTO(
-                "описание2",
+                "other description",
                 LocalDate.of(2013, 3, 12),
                 LocalDate.of(2015, 12, 12));
-        try {
-            //1.getting all orderDTO from db
-            List<OrderDTO> orderDTOListBefore = getAllOrderDTO();
 
-            //2.adding 2 orders
-            orderDTO1 = createOrder(orderDTO1);
-            orderDTO2 = createOrder(orderDTO2);
+        List<OrderDTO> orderDTOListBefore = getAllOrderDTO();
 
-            //3.getting all orderDTO from db and check distinction
-            List<OrderDTO> orderDTOList = getAllOrderDTO();
-            orderDTOList.removeAll(orderDTOListBefore);
-            assertEquals(2, orderDTOList.size());
-            assertTrue(orderDTOList.contains(orderDTO1));
-            assertTrue(orderDTOList.contains(orderDTO2));
-        } finally {
-            //4.delete added orders
-            if (orderDTO1.getId() != null) {
-                deleteOrder(orderDTO1.getId());
-            }
-            if (orderDTO2.getId() != null) {
-                deleteOrder(orderDTO2.getId());
-            }
-        }
+        orderDTO1 = createOrder(orderDTO1);
+        orderDTO2 = createOrder(orderDTO2);
+
+        List<OrderDTO> orderDTOList = getAllOrderDTO();
+        orderDTOList.removeAll(orderDTOListBefore);
+        assertEquals(2, orderDTOList.size());
+        assertTrue(orderDTOList.contains(orderDTO1));
+        assertTrue(orderDTOList.contains(orderDTO2));
+
+        assertEquals(orderDTO1, deleteOrder(orderDTO1.getId()));
+        assertEquals(orderDTO2, deleteOrder(orderDTO2.getId()));
     }
 
     private List<OrderDTO> getAllOrderDTO() {
         RestTemplate template = new RestTemplate();
-        return template.exchange(
-                ROOT_APP + OrderController.ROOT + OrderController.GET_ALL,
+        ResponseEntity<List<OrderDTO>> responseEntity = template.exchange(
+                ROOT + GET_ALL,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<OrderDTO>>() {
-                }).getBody();
+                });
+
+        assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
+        assertNotNull(responseEntity.getBody());
+
+        return responseEntity.getBody();
     }
 
     private OrderDTO updateOrder(OrderDTO orderDTO) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
         HttpEntity<OrderDTO> httpEntity = new HttpEntity<>(orderDTO, headers);
         RestTemplate template = new RestTemplate();
         ResponseEntity<OrderDTO> responseEntity = template.exchange(
-                ROOT_APP + OrderController.ROOT + OrderController.UPDATE,
+                ROOT + UPDATE,
                 HttpMethod.PUT,
                 httpEntity,
                 OrderDTO.class);
+
         assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
+        assertEquals(orderDTO, responseEntity.getBody());
+
         return responseEntity.getBody();
     }
 
     private OrderDTO deleteOrder(Long id) {
         RestTemplate template = new RestTemplate();
         ResponseEntity<OrderDTO> responseEntity = template.exchange(
-                ROOT_APP + OrderController.ROOT + OrderController.DELETE_BY_ID,
+                ROOT + DELETE_BY_ID,
                 HttpMethod.DELETE,
                 null,
                 OrderDTO.class,
                 id
         );
+
         assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
+        assertNotNull(responseEntity.getBody());
+
         return responseEntity.getBody();
     }
 
     private void checkFields(OrderDTO createdOrderDTO, String description, LocalDate created, LocalDate updated) {
         assertNotNull(createdOrderDTO.getId());
         assertEquals(description, createdOrderDTO.getDescription());
-        assertEquals(created, createdOrderDTO.getCreated());
-        assertEquals(updated, createdOrderDTO.getUpdated());
+        assertEquals(created, createdOrderDTO.getCreationDate());
+        assertEquals(updated, createdOrderDTO.getModificationDate());
     }
 
     private OrderDTO getOrderDTO(Long id) {
         RestTemplate template = new RestTemplate();
         ResponseEntity<OrderDTO> responseEntity = template.exchange(
-                ROOT_APP + OrderController.ROOT + OrderController.GET_BY_ID,
+                ROOT + GET_BY_ID,
                 HttpMethod.GET,
                 null,
                 OrderDTO.class,
                 id
         );
+
         assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
+        assertNotNull(responseEntity.getBody());
+        assertEquals(id, responseEntity.getBody().getId());
+
         return responseEntity.getBody();
     }
 
     private OrderDTO createOrder(OrderDTO orderDTO) {
-        return createOrder(orderDTO.getDescription(), orderDTO.getCreated(), orderDTO.getUpdated());
+        return createOrder(orderDTO.getDescription(), orderDTO.getCreationDate(), orderDTO.getModificationDate());
     }
 
-    private OrderDTO createOrder(String descrition, LocalDate created, LocalDate updated) {
-        OrderDTO orderDTO = prefillOrderDTO(descrition, created, updated);
+    private OrderDTO createOrder(String description, LocalDate created, LocalDate updated) {
+        OrderDTO orderDTO = prefillOrderDTO(description, created, updated);
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
         HttpEntity<OrderDTO> httpEntity = new HttpEntity<>(orderDTO, headers);
         RestTemplate template = new RestTemplate();
         ResponseEntity<OrderDTO> responseEntity = template.exchange(
-                ROOT_APP + OrderController.ROOT + OrderController.ADD,
+                ROOT + ADD,
                 HttpMethod.POST,
                 httpEntity,
                 OrderDTO.class
         );
+
         assertEquals("OK", responseEntity.getStatusCode().getReasonPhrase());
-        return responseEntity.getBody();
+
+        OrderDTO orderFromResponse = responseEntity.getBody();
+        assertNotNull(orderFromResponse);
+        assertNotNull(orderFromResponse.getId());
+        checkFields(orderFromResponse, description, created, updated);
+
+        return orderFromResponse;
     }
 
-    private OrderDTO prefillOrderDTO(String description, LocalDate created, LocalDate updated) {
+    private OrderDTO prefillOrderDTO(String description, LocalDate creationDate, LocalDate modificationDate) {
         OrderDTO orderDTO = new OrderDTO();
-        orderDTO.setDescription(description);
-        orderDTO.setCreated(created);
-        orderDTO.setUpdated(updated);
+        alterFields(orderDTO, description, creationDate, modificationDate);
         return orderDTO;
+    }
+
+    private void alterFields(OrderDTO orderDTO, String newDescription, LocalDate newCreationDate, LocalDate newModificationDate) {
+        orderDTO.setDescription(newDescription);
+        orderDTO.setCreationDate(newCreationDate);
+        orderDTO.setModificationDate(newModificationDate);
     }
 }

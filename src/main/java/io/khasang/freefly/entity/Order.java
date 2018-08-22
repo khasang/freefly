@@ -11,10 +11,10 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String description;
-    @Column(columnDefinition = "DATE")
-    private LocalDate created;
-    @Column(columnDefinition = "DATE")
-    private LocalDate updated;
+    @Column(name = "creation", columnDefinition = "DATE")
+    private LocalDate creationDate;
+    @Column(name = "modification", columnDefinition = "DATE")
+    private LocalDate modificationDate;
 
     public Order() {
     }
@@ -35,19 +35,19 @@ public class Order {
         this.description = description;
     }
 
-    public LocalDate getCreated() {
-        return created;
+    public LocalDate getCreationDate() {
+        return creationDate;
     }
 
-    public void setCreated(LocalDate created) {
-        this.created = created;
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
     }
 
-    public LocalDate getUpdated() {
-        return updated;
+    public LocalDate getModificationDate() {
+        return modificationDate;
     }
 
-    public void setUpdated(LocalDate updated) {
-        this.updated = updated;
+    public void setModificationDate(LocalDate modificationDate) {
+        this.modificationDate = modificationDate;
     }
 }
