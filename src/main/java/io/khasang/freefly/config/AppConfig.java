@@ -78,12 +78,12 @@ public class AppConfig {
     }
 
     @Bean
-    public UserDao userDao(){
+    public UserDao userDao() {
         return new UserDaoImpl(User.class);
     }
 
     @Bean
-    public RoleDao roleDao(){
+    public RoleDao roleDao() {
         return new RoleDaoImpl(Role.class);
     }
 }

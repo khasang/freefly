@@ -6,6 +6,7 @@ import io.khasang.freefly.entity.User;
 import java.util.List;
 
 public interface UserService {
+
     /**
      * method for add user
      *
