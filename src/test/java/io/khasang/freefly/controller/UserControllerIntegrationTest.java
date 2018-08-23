@@ -105,6 +105,6 @@ public class UserControllerIntegrationTest {
                 User.class
         ).getBody();
 
-        assertEquals("ivanov2018@mail.ru", updateUser.getEmail());
+         assertEquals("ivanov2018@mail.ru", updateUser.getEmail());
     }
 }

@@ -1,7 +1,5 @@
 package io.khasang.freefly.dao;
 
-import io.khasang.freefly.entity.Cat;
-
 import java.util.List;
 
 public interface BasicDao<T> {
@@ -31,6 +29,7 @@ public interface BasicDao<T> {
 
     /**
      * method for update data from entity
+     *
      * @param entity - entity for update
      * @return updated entity
      */
