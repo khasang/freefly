@@ -47,7 +47,7 @@ public class EmployeeControllerIntegrationTest {
         HttpEntity<Employee> entity = new HttpEntity<>(employee, headers);
         RestTemplate template = new RestTemplate();
         Employee createdEmployee = template.exchange(
-                ROOT+ ADD,
+                ROOT + ADD,
                 HttpMethod.POST,
                 entity,
                 Employee.class
