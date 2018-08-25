@@ -11,6 +11,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
+
 @Transactional
 public class BasicDaoImpl<T> implements BasicDao<T> {
     private final Class<T> entityClass;
@@ -42,6 +43,17 @@ public class BasicDaoImpl<T> implements BasicDao<T> {
     public T create(T entity) {
         getSessionFactory().save(entity);
         return entity;
+    }
+
+    @Override
+    public T update(T entity) {
+        getSessionFactory().update(entity);
+        return entity;
+    }
+
+    @Override
+    public void remove(T entity) {
+        getSessionFactory().delete(entity);
     }
 
     private Session getSessionFactory() {
