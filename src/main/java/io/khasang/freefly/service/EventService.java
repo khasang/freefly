@@ -27,19 +27,4 @@ public interface EventService {
      * @return event's list
      */
     List<Event> getAllEvents();
-
-    /**
-     * method for deleting event by id
-     *
-     * @param id for deleting
-     */
-    void deleteEventById(long id);
-
-    /**
-     * method for updating event
-     *
-     * @param event - for updating
-     * @return updated event
-     */
-    Event updateEvent(Event event);
 }

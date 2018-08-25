@@ -2,7 +2,6 @@ package io.khasang.freefly.dto;
 
 public class EventDTO {
     private Long id;
-
     private String name;
     private String description;
 

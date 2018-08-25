@@ -7,4 +7,5 @@ public class EventDaoImpl extends BasicDaoImpl<Event> implements EventDao {
     public EventDaoImpl(Class<Event> entityClass) {
         super(entityClass);
     }
+
 }

@@ -29,22 +29,4 @@ public class EventController {
     public Event getEventById(@PathVariable(value = "id") String id) {
         return eventService.getEventById(Long.parseLong(id));
     }
-
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=utf-8")
-    @ResponseBody
-    public void deleteEventById(@PathVariable(value = "id") String id) {
-        eventService.deleteEventById(Long.parseLong(id));
-    }
-
-    @RequestMapping(value = "/get/all", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-    @ResponseBody
-    public List<Event> getAllEvents() {
-        return eventService.getAllEvents();
-    }
-
-    @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json;charset=utf-8")
-    @ResponseBody
-    public Event updateEvent(@RequestBody Event event) {
-        return eventService.updateEvent(event);
-    }
 }

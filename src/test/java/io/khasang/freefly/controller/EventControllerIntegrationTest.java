@@ -85,7 +85,6 @@ public class EventControllerIntegrationTest {
         Event event = new Event();
         event.setName("HotDeals");
         event.setDescription("Hot deal flight deals");
-
         return event;
     }
 }

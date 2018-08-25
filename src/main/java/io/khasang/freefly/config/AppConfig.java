@@ -78,4 +78,5 @@ public class AppConfig {
     public EventDao eventDao() {
         return new EventDaoImpl(Event.class);
     }
+
 }
