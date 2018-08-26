@@ -83,4 +83,9 @@ public class AppConfig {
         return new SecurityLogDaoImpl(SecurityLog.class);
     }
 
+    @Bean
+    public TripsDao tripsDao() {
+        return new TripsDaoImpl(Trips.class);
+    }
+
 }
