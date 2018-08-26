@@ -45,7 +45,7 @@ public class NotificationTypesController {
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=utf-8")
     @ResponseBody
-    public void deleteNotificationTypesById(@PathVariable(value = "id") String id) {
-        notificationTypesService.deleteNotificationTypesById(Long.parseLong(id));
+    public NotificationTypes deleteNotificationTypesById(@PathVariable(value = "id") String id) {
+        return notificationTypesService.deleteNotificationTypesById(Long.parseLong(id));
     }
 }

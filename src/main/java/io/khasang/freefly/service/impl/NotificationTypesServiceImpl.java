@@ -37,7 +37,7 @@ public class NotificationTypesServiceImpl implements NotificationTypesService {
     }
 
     @Override
-    public void deleteNotificationTypesById(long id) {
-        notificationTypesDao.deleteById(id);
+    public NotificationTypes deleteNotificationTypesById(long id) {
+        return notificationTypesDao.delete(getNotificationTypesById(id));
     }
 }

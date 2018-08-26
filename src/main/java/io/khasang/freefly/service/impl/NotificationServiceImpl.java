@@ -30,7 +30,6 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public Notification updateNotification(Notification notification) {
-
         notificationDao.update(notification);
         return notification;
     }

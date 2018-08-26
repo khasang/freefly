@@ -40,5 +40,5 @@ public interface NotificationTypesService {
      * method for deleting notificationTypes by id
      * @param id for deleting
      */
-    void deleteNotificationTypesById(long id);
+    NotificationTypes deleteNotificationTypesById(long id);
 }
