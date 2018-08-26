@@ -25,7 +25,6 @@ public class RoleDTO {
 
     public RoleDTO getRoleDTO(Role role) {
         RoleDTO roleDTO = new RoleDTO();
-        List<UserDTO> userDTOList = new ArrayList<>();
         roleDTO.setId(role.getId());
         roleDTO.setName(role.getName());
 
