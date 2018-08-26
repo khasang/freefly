@@ -3,12 +3,15 @@ package io.khasang.freefly.config;
 import io.khasang.freefly.dao.CatDao;
 import io.khasang.freefly.dao.EmployeeDao;
 import io.khasang.freefly.dao.NotificationDao;
+import io.khasang.freefly.dao.NotificationTypesDao;
 import io.khasang.freefly.dao.impl.CatDaoImpl;
 import io.khasang.freefly.dao.impl.EmployeeDaoImpl;
 import io.khasang.freefly.dao.impl.NotificationDaoImpl;
+import io.khasang.freefly.dao.impl.NotificationTypesDaoImpl;
 import io.khasang.freefly.entity.Cat;
 import io.khasang.freefly.entity.Employee;
 import io.khasang.freefly.entity.Notification;
+import io.khasang.freefly.entity.NotificationTypes;
 import io.khasang.freefly.model.CreateTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -75,7 +78,13 @@ public class AppConfig {
     }
 
     @Bean
+    public NotificationTypesDao notificationTypesDao() {
+        return new NotificationTypesDaoImpl(NotificationTypes.class);
+    }
+
+    @Bean
     public NotificationDao notificationDao() {
         return new NotificationDaoImpl(Notification.class);
     }
+
 }
