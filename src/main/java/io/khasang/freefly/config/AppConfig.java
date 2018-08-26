@@ -88,4 +88,9 @@ public class AppConfig {
         return new TripsDaoImpl(Trips.class);
     }
 
+    @Bean
+    public RoleDao roleDao() {
+        return new RoleDaoImpl(Role.class);
+    }
+
 }
