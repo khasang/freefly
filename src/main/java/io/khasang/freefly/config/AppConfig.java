@@ -69,6 +69,11 @@ public class AppConfig {
     }
 
     @Bean
+    public OrderDao orderDao() {
+        return  new OrderDaoImpl(Order.class);
+    }
+
+    @Bean
     public NotificationTypesDao notificationTypesDao() {
         return new NotificationTypesDaoImpl(NotificationTypes.class);
     }
@@ -92,5 +97,4 @@ public class AppConfig {
     public RoleDao roleDao() {
         return new RoleDaoImpl(Role.class);
     }
-
 }
