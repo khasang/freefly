@@ -27,4 +27,6 @@ public interface CatService {
      * @return cat's list
      */
     List<Cat> getAllCats();
+
+    List<Cat> getCatByName(String name);
 }
