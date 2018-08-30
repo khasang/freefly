@@ -36,4 +36,10 @@ public class CatController {
     public List<Cat> getAllCats() {
         return catService.getAllCats();
     }
+
+    @RequestMapping(value = "/get/name/{name}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public List<Cat> getCatByName(@PathVariable(value = "name") String name) {
+        return catService.getCatByName(name);
+    }
 }

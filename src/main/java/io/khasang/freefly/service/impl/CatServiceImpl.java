@@ -15,6 +15,11 @@ public class CatServiceImpl implements CatService {
     private CatDao catDao;
 
     @Override
+    public List<Cat> getCatByName(String name) {
+        return catDao.getCatsByName(name);
+    }
+
+    @Override
     public List<Cat> getAllCats() {
         return catDao.getList();
     }
