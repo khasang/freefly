@@ -2,10 +2,13 @@ package io.khasang.freefly.config;
 
 import io.khasang.freefly.dao.CatDao;
 import io.khasang.freefly.dao.EmployeeDao;
+import io.khasang.freefly.dao.UserDao;
 import io.khasang.freefly.dao.impl.CatDaoImpl;
 import io.khasang.freefly.dao.impl.EmployeeDaoImpl;
+import io.khasang.freefly.dao.impl.UserDaoImpl;
 import io.khasang.freefly.entity.Cat;
 import io.khasang.freefly.entity.Employee;
+import io.khasang.freefly.entity.User;
 import io.khasang.freefly.model.CreateTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -69,5 +72,10 @@ public class AppConfig {
     @Bean
     public EmployeeDao employeeDao() {
         return new EmployeeDaoImpl(Employee.class);
+    }
+
+    @Bean
+    public UserDao userDao() {
+        return new UserDaoImpl(User.class);
     }
 }
