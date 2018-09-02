@@ -44,7 +44,6 @@ public class EventControllerIntegrationTest {
         Event event = createEvent();
 
         RestTemplate template = new RestTemplate();
-
         ResponseEntity<EventDTO> responseEntity = template.exchange(
                 ROOT + GET_BY_ID + "/{id}",
                 HttpMethod.GET,
@@ -63,7 +62,6 @@ public class EventControllerIntegrationTest {
         createEvent();
 
         RestTemplate restTemplate = new RestTemplate();
-
         ResponseEntity<List<Event>> responseEntity = restTemplate.exchange(
                 ROOT + GET_BY_ID + ALL,
                 HttpMethod.GET,
