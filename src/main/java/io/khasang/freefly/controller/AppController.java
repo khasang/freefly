@@ -1,8 +1,11 @@
 package io.khasang.freefly.controller;
 
+import io.khasang.freefly.entity.User;
 import io.khasang.freefly.model.Call;
 import io.khasang.freefly.model.CreateTable;
 import io.khasang.freefly.model.Message;
+import io.khasang.freefly.service.UserService;
+import io.khasang.freefly.util.CheckDataForAddingUser;
 import io.khasang.freefly.util.CheckText;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,10 +13,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.MalformedURLException;
 
@@ -27,6 +27,11 @@ public class AppController {
     private final Call callImpl;
     private final CreateTable createTable;
     private final CheckText checkText;
+
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private CheckDataForAddingUser checkDataForAddingUser;
 
     @Autowired
     public AppController(Call callImpl, Message message, CreateTable createTable, CheckText checkText) {
@@ -75,5 +80,23 @@ public class AppController {
     @RequestMapping(value = "/check/{text}", method = RequestMethod.GET)
     public String checkText(@PathVariable("text") String text) throws MalformedURLException {
         return checkText.checkWord(text);
+    }
+
+    @RequestMapping("/registration")
+    public String getRegistrationPage(){
+        return "registration";
+    }
+
+    @ResponseBody
+    @RequestMapping(path = "/registration/add/user", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public User registrationNewUser(@RequestBody User user){
+        if (checkDataForAddingUser.checkCorrectData(user)){
+            user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+            user.setLock(false);
+            userService.addUser(user);
+            return user;
+        } else {
+         throw new IllegalArgumentException("Adding user is impossible. Reason: " + checkDataForAddingUser.getErrDescription(user));
+        }
     }
 }

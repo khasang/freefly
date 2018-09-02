@@ -45,7 +45,12 @@ public class UserController {
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=utf-8")
     @ResponseBody
-    public User deleteUser(@RequestBody String id) {
+    public User deleteUser(@PathVariable(name = "id") String id) {
         return userService.deleteUserById(Long.parseLong(id));
+    }
+
+    @RequestMapping(value = "/get/login/{login}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public List<User> getUsersByLogin(@PathVariable(name = "login") String login) {
+        return userService.getUsersByLogin(login);
     }
 }
