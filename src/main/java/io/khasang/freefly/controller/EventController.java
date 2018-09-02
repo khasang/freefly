@@ -38,7 +38,7 @@ public class EventController {
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json;charset=utf-8")
     @ResponseBody
-    public Event updateEventById(@RequestBody Event event) {
+    public Event updateEvent(@RequestBody Event event) {
         return eventService.updateEvent(event);
     }
 }

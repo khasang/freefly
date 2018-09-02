@@ -1,6 +1,7 @@
 package io.khasang.freefly.controller;
 
 import io.khasang.freefly.dto.EventDTO;
+import io.khasang.freefly.entity.Cat;
 import io.khasang.freefly.entity.Event;
 import org.junit.Test;
 import org.springframework.core.ParameterizedTypeReference;
@@ -17,8 +18,26 @@ public class EventControllerIntegrationTest {
     private final static String ADD = "/add";
     private final static String GET_BY_ID = "/get";
     private final static String ALL = "/all";
-    private final static String DELETE_BY_ID = "/delete";
     private final static String UPDATE = "/update";
+
+    @Test
+    public void updateEvent() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
+        Event event = createEvent();
+        event.setName("Hot Deals");
+        HttpEntity<Event> entity = new HttpEntity<>(event, headers);
+        RestTemplate template = new RestTemplate();
+        Event updateEvent = template.exchange(
+                ROOT + UPDATE,
+                HttpMethod.PUT,
+                entity,
+                Event.class
+        ).getBody();
+
+        assertEquals("Hot Deals", updateEvent.getName());
+    }
 
     @Test
     public void addTestAndCheck() {

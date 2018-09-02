@@ -3,7 +3,7 @@ package io.khasang.freefly.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "event")
+@Table(name = "events")
 public class Event {
 
     @Id
