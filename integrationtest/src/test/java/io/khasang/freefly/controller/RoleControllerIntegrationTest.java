@@ -13,10 +13,10 @@ import static org.junit.Assert.assertNotNull;
 
 public class RoleControllerIntegrationTest {
 
-    public static final String ROOT = "http://localhost:8080/role";
-    public static final String ADD = "/add";
-    public static final String GET_BY_ID = "/get";
-    public static final String ALL = "/all";
+    private static final String ROOT = "http://localhost:8080/role";
+    private static final String ADD = "/add";
+    private static final String GET_BY_ID = "/get";
+    private static final String ALL = "/all";
 
     @Test
     public void addRole() {
