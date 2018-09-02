@@ -97,4 +97,9 @@ public class AppConfig {
     public RoleDao roleDao() {
         return new RoleDaoImpl(Role.class);
     }
+
+    @Bean
+    public UserDao userDao(){
+        return new UserDaoImpl(User.class);
+    }
 }
