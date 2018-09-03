@@ -107,4 +107,9 @@ public class AppConfig {
     public OrderStatusDao orderStatusDao() {
         return new OrderStatusDaoImpl(OrderStatus.class);
     }
+
+    @Bean
+    public EventDao eventDao() {
+        return new EventDaoImpl(Event.class);
+    }
 }
