@@ -102,4 +102,9 @@ public class AppConfig {
     public UserDao userDao(){
         return new UserDaoImpl(User.class);
     }
+
+    @Bean
+    public OrderStatusDao orderStatusDao() {
+        return new OrderStatusDaoImpl(OrderStatus.class);
+    }
 }
