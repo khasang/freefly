@@ -16,6 +16,12 @@ public class Order {
     @Column(name = "modification", columnDefinition = "DATE")
     private LocalDate modificationDate;
 
+    @ManyToOne
+    User user;
+
+    @ManyToOne
+    OrderStatus orderStatus;
+
     public Order() {
     }
 

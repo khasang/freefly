@@ -2,6 +2,8 @@ package io.khasang.freefly.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "trips")
@@ -16,6 +18,9 @@ public class Trips {
     @Column(name = "date_departure")
     private LocalDate dateDeparture;
     private String price;
+
+    @OneToMany(mappedBy = "trips", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Notification> notificationList = new ArrayList<>();
 
     public String getPrice() {
         return price;
@@ -57,4 +62,11 @@ public class Trips {
         this.dateDeparture = dateDeparture;
     }
 
+    public List<Notification> getNotificationList() {
+        return notificationList;
+    }
+
+    public void setNotificationList(List<Notification> notificationList) {
+        this.notificationList = notificationList;
+    }
 }
