@@ -81,17 +81,4 @@ public class AppController {
     public String getRegistrationPage(){
         return "registration";
     }
-
-    @ResponseBody
-    @RequestMapping(path = "/registration/add/user", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public User registrationNewUser(@RequestBody User user){
-        if (checkDataForAddingUser.checkCorrectData(user)){
-            user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-            user.setLock(false);
-            userService.addUser(user);
-            return user;
-        } else {
-         throw new IllegalArgumentException("Adding user is impossible. Reason: " + checkDataForAddingUser.getErrDescription(user));
-        }
-    }
 }
