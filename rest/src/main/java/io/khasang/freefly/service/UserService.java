@@ -44,4 +44,19 @@ public interface UserService {
      * @param id for deleting
      */
     User deleteUserById(long id);
+
+    /**
+     * method for getting users by login
+     *
+     * @param login fo search
+     * @return list users with specific login
+     */
+    List<User> getUsersByLogin(String login);
+
+    /**
+     * method for getting users by e-mail
+     * @param email for search
+     * @return list users with specific email
+     */
+    List<User> getUsersByEmail(String email);
 }
