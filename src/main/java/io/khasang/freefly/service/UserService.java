@@ -49,7 +49,7 @@ public interface UserService {
      * method for getting users by login
      *
      * @param login fo search
-     * @return list users with specific email
+     * @return list users with specific login
      */
     List<User> getUsersByLogin(String login);
 
