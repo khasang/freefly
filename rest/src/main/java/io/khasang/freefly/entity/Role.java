@@ -1,6 +1,8 @@
 package io.khasang.freefly.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "roles")
@@ -10,6 +12,9 @@ public class Role {
     private Long id;
 
     private String name;
+
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "roleList")
+    private List<User> userList = new ArrayList<>();
 
     public Long getId() {
         return id;

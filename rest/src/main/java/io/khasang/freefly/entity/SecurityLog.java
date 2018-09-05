@@ -14,6 +14,12 @@ public class SecurityLog {
     @Column(columnDefinition = "Date")
     private LocalDate date;
 
+    @ManyToOne
+    User user;
+
+    @ManyToOne
+    Event event;
+
     public Long getId() {
         return id;
     }
@@ -28,5 +34,21 @@ public class SecurityLog {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
     }
 }
