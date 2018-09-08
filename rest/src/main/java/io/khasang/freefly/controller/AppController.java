@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.net.MalformedURLException;
@@ -45,6 +46,19 @@ public class AppController {
         model.addAttribute("message", message.getInfo());
         model.addAttribute("call", callImpl.getInfo());
         return "hello";
+    }
+
+    /**
+     * User login
+     */
+    @RequestMapping(value = {"/login"})
+    public ModelAndView login(@RequestParam(value = "error", required = false) String error) {
+        ModelAndView model = new ModelAndView();
+        if (error != null) {
+            model.addObject("error", "Invalid username or password!");
+        }
+        model.setViewName("login");
+        return model;
     }
 
     @RequestMapping("/create")
