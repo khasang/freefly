@@ -214,7 +214,6 @@ public class UserControllerIntegrationTest {
         sendRequestForUpdatingUser(userInDB);
     }
 
-
     private User creationUser(){
         User user = new User();
         user.setLogin(UUID.randomUUID().toString());
@@ -226,7 +225,6 @@ public class UserControllerIntegrationTest {
 
         return sendRequestForCreationUser(user);
     }
-
 
     private User sendRequestForUpdatingUser(User user) {
         HttpHeaders headers = new HttpHeaders();
