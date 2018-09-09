@@ -46,17 +46,17 @@ public interface UserService {
     User deleteUserById(long id);
 
     /**
-     * method for getting users by login
+     * method for getting user by login
      *
      * @param login fo search
-     * @return list users with specific login
+     * @return user with specific login
      */
-    List<User> getUsersByLogin(String login);
+    User getUserByLogin(String login);
 
     /**
-     * method for getting users by e-mail
+     * method for getting user by e-mail
      * @param email for search
-     * @return list users with specific email
+     * @return user with specific email
      */
-    List<User> getUsersByEmail(String email);
+    User getUserByEmail(String email);
 }

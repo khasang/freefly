@@ -1,47 +1,23 @@
-var RestPostAddNewUser = function (login, email, name, lastName, password) {
-
-    JSONObject = {
-        "login": login,
-        "email": email,
-        "firstName": name,
-        "lastName": lastName,
-        "password": password
-    };
-
-    $.ajax({
-        type: "POST",
-        url: "http://localhost:8080/user/registration/add",
-        contentType: "application/json;utf-8",
-        data: JSON.stringify(JSONObject),
-        dataType: "json",
-        async: false,
-        success: function (result) {
-            if (result > 0) {
-                $('#response').html("User registrated with id = " + result)
-            } else {
-                $('#response').html("Wrong data for registration: " + GetReason(result))
-            }
-        },
-        error: function (jqXHR, testStatus, errorThrown) {
-            $('#response').html(JSON.stringify(jqXHR))
-        }
-    });
-
-    GenericCaptcha();
-};
-
-var GetReason = function(cod){
-    switch (cod){
-        case -1 : return "exists user with specific login";
-        case -2 : return "exists user with specific e-mail";
-        case -3 : return "not valid e-mail";
-        case -4 : return "no info about fist name";
-        case -5 : return "no info about last name";
-        default : "reason unknown";
+var GetReason = function (cod) {
+    switch (cod) {
+        case 1 :
+            return "exists user with specific login";
+        case 2 :
+            return "exists user with specific e-mail";
+        case 3 :
+            return "not valid e-mail";
+        case 4 :
+            return "no info about fist name";
+        case 5 :
+            return "no info about last name";
+        case 6:
+            return "empty login";
+        default :
+            "reason unknown";
     }
 };
 
-var ValidPassword = function (login, email, name, lastName, password, password2) {
+var ValidPassword = function (password, password2) {
     if (password != password2) {
         alert("passwords not equals. Fix and try again");
         return false;
@@ -53,15 +29,64 @@ var ValidPassword = function (login, email, name, lastName, password, password2)
     return true;
 };
 
-var Registration = function (login, email, name, lastName, password, password2) {
+var AddNewUser = function (login, email, name, lastName, password) {
+    JSONObject = {
+        "login": login,
+        "email": email,
+        "firstName": name,
+        "lastName": lastName,
+        "password": password
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/user/check",
+        contentType: "application/json;utf-8",
+        data: JSON.stringify(JSONObject),
+        dataType: "json",
+        async: false,
+        success: function (result) {
+            if (result != 0) {
+                $('#response').html("Not correct data: " + GetReason(result));
+            } else {
+                //data is correct, add user
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:8080/user/add/nolocked",
+                    contentType: "application/json;utf-8",
+                    data: JSON.stringify(JSONObject),
+                    dataType: "json",
+                    async: false,
+                    success: function (result) {
+                        $('#response').html("User '"+ login+ "' registrated.")
+                    },
+                    error: function (jqXHR, testStatus, errorThrown) {
+                        $('#response').html(JSON.stringify(jqXHR))
+                    }
+                });
+
+            }
+        },
+        error: function (jqXHR, testStatus, errorThrown) {
+            $('#response').html(JSON.stringify(jqXHR))
+        }
+    });
+
+    GenericCaptcha();
+}
+
+var Registration = function (login, email, name, lastName, password) {
     if (!CheckCaptcha($('#captchaResult').val())) {
         $('#response').html("Captcha wrong!");
         GenericCaptcha();
         return;
     }
-    if (ValidPassword(login, email, name, lastName, password, password2)) {
-        RestPostAddNewUser(login, email, name, lastName, password);
+
+    if (!ValidPassword($('#password').val(), $('#password2').val())) {
+        return;
     }
+
+    AddNewUser(login, email, name, lastName, password);
 };
 
 var GenericCaptcha = function () {

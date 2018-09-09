@@ -14,6 +14,16 @@ import java.util.Objects;
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
+
+    //cods error. apply during check data for creation or updating user
+    private final int NO_ERROR = 0;
+    private final int NON_UNIQUE_LOGIN = 1;
+    private final int NON_UNIQUE_EMAIL = 2;
+    private final int NOT_VALID_EMAIL = 3;
+    private final int UNDEFINITED_FIST_NAME = 4;
+    private final int UNDEFINITED_SECOND_NAME = 5;
+    private final int UNDEFINITED_LOGIN = 6;
+
     private final UserService userService;
 
     @Autowired
@@ -21,10 +31,37 @@ public class UserController {
         this.userService = userService;
     }
 
+    /**
+     * method for creation user.
+     *
+     * @param user for creation
+     * @return created user. created user has user.password's value encodes by BCryptPasswordEncoder
+     * throws IEA with reason's cod in message
+     */
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
     public User addUser(@RequestBody User user) {
-        return userService.addUser(user);
+        int cod = checkCorrectDataForCreation(user);
+        if (cod == NO_ERROR) {
+            user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+            return userService.addUser(user);
+        } else {
+            throw new IllegalArgumentException("User can not be added. Cod reason = " + cod);
+        }
+    }
+
+    /**
+     * method for creation no locked user.
+     *
+     * @param user for creation
+     * @return created user. created user has user.password's value encodes by BCryptPasswordEncoder and user.isLock = false
+     * throws IEA with reason's cod in message
+     */
+    @RequestMapping(value = "/add/nolocked", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public User addNotLockedUser(@RequestBody User user) {
+        user.setLock(false);
+        return addUser(user);
     }
 
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
@@ -39,10 +76,22 @@ public class UserController {
         return userService.getAllUserDTO();
     }
 
+    /**
+     * method for renovation user
+     *
+     * @param user data for updating
+     * @return updated user.
+     * throws IEA with reason's cod in message specific in method checkCorrectDataForCreation's doc
+     */
     @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json;charset=utf-8")
     @ResponseBody
     public User updateUser(@RequestBody User user) {
-        return userService.updateUser(user);
+        int cod = checkCorrectDataForUpdating(user);
+        if (cod == NO_ERROR) {
+            return userService.updateUser(user);
+        } else {
+            throw new IllegalArgumentException("User can not be updated. Cod reason = " + cod);
+        }
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=utf-8")
@@ -51,68 +100,80 @@ public class UserController {
         return userService.deleteUserById(Long.parseLong(id));
     }
 
-    @RequestMapping(value = "/get/login/{login}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-    public List<User> getUsersByLogin(@PathVariable(name = "login") String login) {
-        return userService.getUsersByLogin(login);
-    }
-
     /**
-     * method for adding user by registration
-     * @param user
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(path = "/registration/add", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public Long registrationNewUser(@RequestBody User user){
-        if (checkCorrectData(user) < 0) {
-            return checkCorrectData(user);
-        } else {
-            user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-            user.setLock(false);
-            userService.addUser(user);
-            return user.getId();
-        }
-    }
-
-    /**
-     * check data for correct for registration new user
-     * @param user
-     * @return 0L then data corrected
-     *         < 0L if data uncorrected
+     * check data about new user: unique login, e-mail, and non empty info
      *
-     *  -1 : exists user with specific login
-     *  -2 : exists user with specific email
-     *  -3 : email not valid
-     *  -4 : no info about firstName
-     *  -5 : no info about lastName
+     * @param newUser
+     * @return NO_ERROR if data correct or error's cod
      */
-    private Long checkCorrectData(User user) {
-        if (userService.getUsersByLogin(user.getLogin()).size() > 0) {
-            return -1L;
+    @RequestMapping(value = "/check", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public Integer checkCorrectDataForCreation(@RequestBody User newUser) {
+        if (Objects.nonNull(userService.getUserByLogin(newUser.getLogin()))) {
+            return NON_UNIQUE_LOGIN;
         }
-        if (userService.getUsersByEmail(user.getEmail()).size() > 0) {
-            return -2L;
+        if (Objects.nonNull(userService.getUserByEmail(newUser.getEmail()))) {
+            return NON_UNIQUE_EMAIL;
         }
-        if (!verificationEmail(user.getEmail())) {
-            return -3L;
+        if (!verificationEmail(newUser.getEmail())) {
+            return NOT_VALID_EMAIL;
         }
-        if (Objects.isNull(user.getFirstName())) {
-            return -5L;
+
+        return checkNonEmptyFields(newUser);
+    }
+
+    /**
+     * check data for updated user: unique login, e-mail, and non empty info
+     *
+     * @param updatedUser new data for user
+     * @return NO_ERROR if data correct or error's cod
+     */
+    public Integer checkCorrectDataForUpdating(User updatedUser) {
+        //if exists user with specific id
+        if (Objects.nonNull(userService.getUserById(updatedUser.getId()))) {
+
+            User userSameLogin = userService.getUserByLogin(updatedUser.getLogin());
+            if (Objects.nonNull(userSameLogin)) {
+                //if user with the same login is not the user for update
+                if (!userSameLogin.getId().equals(updatedUser.getId())) {
+                    return NON_UNIQUE_LOGIN;
+                }
+            }
+
+            User userSameEmail = userService.getUserByEmail(updatedUser.getEmail());
+            if (Objects.nonNull(userSameEmail)) {
+                //if user with the same email is not the user for update
+                if (!userSameEmail.getId().equals(updatedUser.getId())) {
+                    return NON_UNIQUE_EMAIL;
+                }
+            }
+
+            if (!verificationEmail(updatedUser.getEmail())) {
+                return NOT_VALID_EMAIL;
+            }
+
+            return checkNonEmptyFields(updatedUser);
+
+        } else {
+            //not exists user with specific id
+            return NO_ERROR;
         }
+    }
+
+    private int checkNonEmptyFields(User user) {
         if (user.getFirstName().isEmpty()) {
-            return -5L;
-        }
-        if (Objects.isNull(user.getLastName())) {
-            return -5L;
+            return UNDEFINITED_FIST_NAME;
         }
         if (user.getLastName().isEmpty()) {
-            return -5L;
+            return UNDEFINITED_SECOND_NAME;
+        }
+        if (user.getLogin().isEmpty()) {
+            return UNDEFINITED_LOGIN;
         }
 
-        return 0L;
+        return NO_ERROR;
     }
 
-    //TODO: should improve regular for email
     private boolean verificationEmail(String email) {
         return email.matches("(.+)@(.+)\\.(.+)");
     }

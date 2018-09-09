@@ -40,7 +40,7 @@ Fill the form, please:
         <td></td>
         <td>
             <button type="button" onclick="Registration($('#login').val(), $('#email').val(), $('#name').val(),
-            $('#lastName').val(), $('#password').val(), $('#password2').val())">registration!
+            $('#lastName').val(), $('#password').val())">registration!
             </button>
         </td>
     </tr>

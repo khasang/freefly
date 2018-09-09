@@ -44,12 +44,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsersByLogin(String login) {
-        return userDao.getUsersByLogin(login);
+    public User getUserByLogin(String login) {
+        List<User> users = userDao.getUsersByLogin(login);
+        if (users.size() > 1) {
+            throw new IllegalStateException("found several users with the same login");
+        }
+        if (users.isEmpty()) {
+            return null;
+        } else {
+            return users.get(0);
+        }
     }
 
     @Override
-    public List<User> getUsersByEmail(String email) {
-        return userDao.getUsersByEmail(email);
+    public User getUserByEmail(String email) {
+        List<User> users = userDao.getUsersByEmail(email);
+        if (users.size() > 1) {
+            throw new IllegalStateException("found several users with the same e-mail");
+        }
+        if (users.isEmpty()) {
+            return null;
+        } else {
+            return users.get(0);
+        }
     }
 }
