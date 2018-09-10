@@ -42,4 +42,30 @@ public class UserServiceImpl implements UserService {
     public User deleteUserById(long id) {
         return userDao.delete(getUserById(id));
     }
+
+    @Override
+    public User getUserByLogin(String login) {
+        List<User> users = userDao.getUsersByLogin(login);
+        if (users.size() > 1) {
+            throw new IllegalStateException("found several users with the same login");
+        }
+        if (users.isEmpty()) {
+            return null;
+        } else {
+            return users.get(0);
+        }
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        List<User> users = userDao.getUsersByEmail(email);
+        if (users.size() > 1) {
+            throw new IllegalStateException("found several users with the same e-mail");
+        }
+        if (users.isEmpty()) {
+            return null;
+        } else {
+            return users.get(0);
+        }
+    }
 }
