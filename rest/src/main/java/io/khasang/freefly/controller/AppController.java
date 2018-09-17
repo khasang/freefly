@@ -1,10 +1,8 @@
 package io.khasang.freefly.controller;
 
-import io.khasang.freefly.entity.Cat;
 import io.khasang.freefly.model.Call;
 import io.khasang.freefly.model.CreateTable;
 import io.khasang.freefly.model.Message;
-import io.khasang.freefly.service.CatService;
 import io.khasang.freefly.util.CheckText;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,10 +10,13 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletResponse;
 import java.net.MalformedURLException;
 
 // controller MVC
@@ -28,15 +29,13 @@ public class AppController {
     private final Call callImpl;
     private final CreateTable createTable;
     private final CheckText checkText;
-    private final CatService catService;
 
     @Autowired
-    public AppController(Call callImpl, Message message, CreateTable createTable, CheckText checkText, CatService catService) {
+    public AppController(Call callImpl, Message message, CreateTable createTable, CheckText checkText) {
         this.callImpl = callImpl;
         this.message = message;
         this.createTable = createTable;
         this.checkText = checkText;
-        this.catService = catService;
     }
 
     @RequestMapping("/")
@@ -93,15 +92,8 @@ public class AppController {
         return checkText.checkWord(text);
     }
 
-    @RequestMapping(value = "/postMessage", method = RequestMethod.POST)
-    @ResponseBody
-    public Object messagePost(@RequestBody Cat cat, HttpServletResponse response){
-        try {
-            catService.addCat(cat);
-            return cat;
-        } catch (NumberFormatException e) {
-            response.setStatus(-1);
-            return response;
-        }
+    @RequestMapping("/registration")
+    public String getRegistrationPage(){
+        return "registration";
     }
 }

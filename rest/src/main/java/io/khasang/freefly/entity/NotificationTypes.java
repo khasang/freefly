@@ -1,11 +1,12 @@
 package io.khasang.freefly.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "notification_types")
 public class NotificationTypes {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,6 +18,9 @@ public class NotificationTypes {
 
     @Column(name = "text_notification")
     private String textNotification;
+
+    @OneToMany(mappedBy = "notificationTypes", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Notification> notificationList = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -47,6 +51,15 @@ public class NotificationTypes {
     }
 
     public void setTextNotification(String textNotification) {
+
         this.textNotification = textNotification;
+    }
+
+    public List<Notification> getNotificationList() {
+        return notificationList;
+    }
+
+    public void setNotificationList(List<Notification> notificationList) {
+        this.notificationList = notificationList;
     }
 }
