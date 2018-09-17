@@ -37,7 +37,7 @@
             </p>
             <p class="change_link">
                 <span>Not a member yet ?</span>
-                <a href="#toregister" class="to_register">Register Now</a>
+                <a href="registration" class="to_register">Register Now</a>
             </p>
         </form>
     </div>
