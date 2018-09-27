@@ -1,9 +1,12 @@
 package io.khasang.freefly.controller;
 
 import io.khasang.freefly.dto.UserDTO;
+import io.khasang.freefly.entity.Role;
 import io.khasang.freefly.entity.User;
+import io.khasang.freefly.service.RoleService;
 import io.khasang.freefly.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,10 +32,15 @@ public class UserController {
     private final int UNDEFINITED_LOGIN = 6;
 
     private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    public UserController(UserService userService) {
+    Environment environment;
+
+    @Autowired
+    public UserController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     /**
@@ -65,6 +73,8 @@ public class UserController {
     @ResponseBody
     public User addNotLockedUser(@RequestBody User user) {
         user.setLock(false);
+        List<Role> roleByDefault = roleService.getRoleByName(environment.getRequiredProperty("defaultRoleForNewUser"));
+        user.setRoleList(roleByDefault);
         return addUser(user);
     }
 

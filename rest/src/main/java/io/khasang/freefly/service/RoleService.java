@@ -28,4 +28,11 @@ public interface RoleService {
      * @return role's list
      */
     List<RoleDTO> getAllRoleDTO();
+
+    /**
+     * method for getting role by name
+     * @param name
+     * @return role's list
+     */
+    List<Role> getRoleByName(String name);
 }
