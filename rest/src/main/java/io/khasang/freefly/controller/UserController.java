@@ -22,7 +22,7 @@ import java.util.Objects;
 @RequestMapping(value = "/user")
 public class UserController {
 
-    //cods error. apply during check data for creation or updating user
+    //codes error. apply during check data for creation or updating user
     private final int NO_ERROR = 0;
     private final int NON_UNIQUE_LOGIN = 1;
     private final int NON_UNIQUE_EMAIL = 2;
@@ -48,17 +48,17 @@ public class UserController {
      *
      * @param user for creation
      * @return created user. created user has user.password's value encodes by BCryptPasswordEncoder
-     * throws IEA with reason's cod in message
+     * throws IEA with reason's code in message
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
     public User addUser(@RequestBody User user) {
-        int cod = checkCorrectDataForCreation(user);
-        if (cod == NO_ERROR) {
+        int code = checkCorrectDataForCreation(user);
+        if (code == NO_ERROR) {
             user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
             return userService.addUser(user);
         } else {
-            throw new IllegalArgumentException("User can not be added. Cod reason = " + cod);
+            throw new IllegalArgumentException("User can not be added. Code reason = " + code);
         }
     }
 
@@ -67,7 +67,7 @@ public class UserController {
      *
      * @param user for creation
      * @return created user. created user has user.password's value encodes by BCryptPasswordEncoder and user.isLock = false
-     * throws IEA with reason's cod in message
+     * throws IEA with reason's code in message
      */
     @RequestMapping(value = "/add/nolocked", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
@@ -95,16 +95,16 @@ public class UserController {
      *
      * @param user data for updating
      * @return updated user.
-     * throws IEA with reason's cod in message specific in method checkCorrectDataForCreation's doc
+     * throws IEA with reason's code in message specific in method checkCorrectDataForCreation's doc
      */
     @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json;charset=utf-8")
     @ResponseBody
     public User updateUser(@RequestBody User user) {
-        int cod = checkCorrectDataForUpdating(user);
-        if (cod == NO_ERROR) {
+        int code = checkCorrectDataForUpdating(user);
+        if (code == NO_ERROR) {
             return userService.updateUser(user);
         } else {
-            throw new IllegalArgumentException("User can not be updated. Cod reason = " + cod);
+            throw new IllegalArgumentException("User can not be updated. Code reason = " + code);
         }
     }
 
@@ -118,7 +118,7 @@ public class UserController {
      * check data about new user: unique login, e-mail, and non empty info
      *
      * @param newUser
-     * @return NO_ERROR if data correct or error's cod
+     * @return NO_ERROR if data correct or error's code
      */
     @RequestMapping(value = "/check", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
@@ -140,7 +140,7 @@ public class UserController {
      * check data for updated user: unique login, e-mail, and non empty info
      *
      * @param updatedUser new data for user
-     * @return NO_ERROR if data correct or error's cod
+     * @return NO_ERROR if data correct or error's code
      */
     public Integer checkCorrectDataForUpdating(User updatedUser) {
         //if exists user with specific id
