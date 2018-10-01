@@ -1,0 +1,27 @@
+#content {
+    float: left;
+    width: 80%;
+    height: 300px;
+}
+
+#menu {
+    width: 100%;
+    height: 300px;
+}
+
+.section {
+    float: left;
+    width: 100%;
+    height: 50%;
+}
+
+.section_main {
+    float: left;
+    width: 20%;
+    height: 70px;
+}
+
+.select_test {
+    width: 150px;
+    height: 30px;
+}
