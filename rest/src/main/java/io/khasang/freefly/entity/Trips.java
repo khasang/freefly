@@ -19,7 +19,7 @@ public class Trips {
     private LocalDate dateDeparture;
     private String price;
 
-    @OneToMany(mappedBy = "trips", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Notification> notificationList = new ArrayList<>();
 
     public String getPrice() {

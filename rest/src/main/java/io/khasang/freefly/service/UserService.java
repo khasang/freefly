@@ -59,4 +59,12 @@ public interface UserService {
      * @return user with specific email
      */
     User getUserByEmail(String email);
+
+    /**
+     * method for getting user by specific id
+     *
+     * @param id - user's id
+     * @return user by id
+     */
+    UserDTO getUserDTOById(long id);
 }
