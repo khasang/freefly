@@ -1,5 +1,5 @@
-var GetReason = function (cod) {
-    switch (cod) {
+var GetReason = function (code) {
+    switch (code) {
         case 1 :
             return "exists user with specific login";
         case 2 :
