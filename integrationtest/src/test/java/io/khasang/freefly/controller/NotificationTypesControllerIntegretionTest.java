@@ -25,11 +25,11 @@ public class NotificationTypesControllerIntegretionTest {
 
         RestTemplate template = new RestTemplate();
 
-        ResponseEntity<NotificationTypesDTO> responseEntity = template.exchange(
+        ResponseEntity<NotificationTypes> responseEntity = template.exchange(
                 ROOT + GET_BY_ID + "/{id}",
                 HttpMethod.GET,
                 null,
-                NotificationTypesDTO.class,
+                NotificationTypes.class,
                 notificationTypes.getId()
         );
 
