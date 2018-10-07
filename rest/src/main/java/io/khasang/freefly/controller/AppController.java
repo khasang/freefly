@@ -97,4 +97,9 @@ public class AppController {
     public String getRegistrationPage(){
         return "registration";
     }
+
+    @RequestMapping("/updating_user")
+    public String getUpdatingPage(){
+        return "updating_user";
+    }
 }

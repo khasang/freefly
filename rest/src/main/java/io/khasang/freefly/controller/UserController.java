@@ -1,10 +1,12 @@
 package io.khasang.freefly.controller;
 
 import io.khasang.freefly.dto.UserDTO;
+import io.khasang.freefly.dto.Util;
 import io.khasang.freefly.entity.Role;
 import io.khasang.freefly.entity.User;
 import io.khasang.freefly.service.RoleService;
 import io.khasang.freefly.service.UserService;
+import io.khasang.freefly.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -33,14 +35,19 @@ public class UserController {
 
     private final UserService userService;
     private final RoleService roleService;
+    private final SecurityUtil securityUtil;
 
     @Autowired
     Environment environment;
 
     @Autowired
-    public UserController(UserService userService, RoleService roleService) {
+    Util utilDTO;
+
+    @Autowired
+    public UserController(UserService userService, RoleService roleService, SecurityUtil securityUtil) {
         this.userService = userService;
         this.roleService = roleService;
+        this.securityUtil = securityUtil;
     }
 
     /**
@@ -142,7 +149,9 @@ public class UserController {
      * @param updatedUser new data for user
      * @return NO_ERROR if data correct or error's code
      */
-    public Integer checkCorrectDataForUpdating(User updatedUser) {
+    @RequestMapping(value = "/checkforupdate", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public Integer checkCorrectDataForUpdating(@RequestBody User updatedUser) {
         //if exists user with specific id
         if (Objects.nonNull(userService.getUserById(updatedUser.getId()))) {
 
@@ -190,5 +199,39 @@ public class UserController {
 
     private boolean verificationEmail(String email) {
         return email.matches("(.+)@(.+)\\.(.+)");
+    }
+
+    @RequestMapping(value = "/security/authentication", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public UserDTO getAboutAutorizedUser() {
+        User userFromDB = securityUtil.getAuthorizedUser();
+        UserDTO aboutUser = utilDTO.getUserDTO(userFromDB);
+        return aboutUser;
+    }
+
+    /**
+     * method for updating info about user
+     * info for updating:
+     * login, email, firstName, lastName
+     *
+     * @param user contains data for updating
+     * @return updated user.
+     * throws IEA with reason's code in message specific in method checkCorrectDataForCreation's doc
+     */
+    @RequestMapping(value = "/updateinfo", method = RequestMethod.PUT, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public UserDTO updateInfoAboutUser(@RequestBody User user) {
+        int code = checkCorrectDataForUpdating(user);
+        if (code == NO_ERROR) {
+            User userInDb = userService.getUserById(user.getId());
+            userInDb.setLogin(user.getLogin());
+            userInDb.setEmail(user.getEmail());
+            userInDb.setFirstName(user.getFirstName());
+            userInDb.setLastName(user.getLastName());
+            userInDb = userService.updateUser(userInDb);
+            return utilDTO.getUserDTO(userInDb);
+        } else {
+            throw new IllegalArgumentException("User can not be updated. Code reason = " + code);
+        }
     }
 }
