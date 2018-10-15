@@ -1,6 +1,8 @@
 package io.khasang.freefly.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -22,6 +24,18 @@ public class User {
 
     @Column(name = "locked")
     private Boolean isLock;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Role> roleList = new ArrayList<>();
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Notification> notificationList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SecurityLog> securityLogList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orderList = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -77,5 +91,45 @@ public class User {
 
     public void setLock(boolean lock) {
         isLock = lock;
+    }
+
+    public Boolean getLock() {
+        return isLock;
+    }
+
+    public void setLock(Boolean lock) {
+        isLock = lock;
+    }
+
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
+    }
+
+    public List<Notification> getNotificationList() {
+        return notificationList;
+    }
+
+    public void setNotificationList(List<Notification> notificationList) {
+        this.notificationList = notificationList;
+    }
+
+    public List<SecurityLog> getSecurityLogList() {
+        return securityLogList;
+    }
+
+    public void setSecurityLogList(List<SecurityLog> securityLogList) {
+        this.securityLogList = securityLogList;
+    }
+
+    public List<Order> getOrderList() {
+        return orderList;
+    }
+
+    public void setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
     }
 }

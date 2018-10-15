@@ -21,6 +21,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .and()
+                .formLogin().loginPage("/login").permitAll().usernameParameter("j_username")
+                .passwordParameter("j_password").loginProcessingUrl("/j_spring_security_check")
+                .and()
+                .authorizeRequests()
                 .antMatchers("/create").access("hasRole('ADMIN')")
                 .antMatchers("/").permitAll()
                 .antMatchers("/admin/**").access("hasRole('ADMIN')")
