@@ -32,3 +32,4 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/favicon/**").addResourceLocations("/WEB-INF/views/favicon/");
     }
 }
+
