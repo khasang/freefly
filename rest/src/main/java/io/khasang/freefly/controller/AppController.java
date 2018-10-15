@@ -39,9 +39,7 @@ public class AppController {
     }
 
     @RequestMapping("/")
-    public String getHelloPage(Model model) {
-        // nok
-//        message = new Message("asdasd");
+    public String getHelloPage() {
         return "helloPage";
     }
 

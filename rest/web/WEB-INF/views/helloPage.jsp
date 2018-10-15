@@ -14,7 +14,6 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
 
-
     <!-- Favicon -->
     <link href="favicon/favicon.ico" rel="shortcut icon" type="image/x-icon">
 
@@ -28,11 +27,21 @@
             <a href="/"><img src="images/logo.png" alt="logo"/></a>
         </nav>
         <div class="header__section">
-            <div class="header__item headerButton"><a href="#">Регистрация</a></div>
-            <div class="header__item headerButton"><a href="#">Войти</a></div>
+            <div class="header__item headerButton"><a href="/registration">Регистрация</a></div>
+            <div class="header__item headerButton"><a href="/login">Войти</a></div>
         </div>
     </div>
 </header>
+
+
+
+
+<section>
+
+
+
+
+</section>
 
 
 
@@ -46,7 +55,6 @@
         <a href="https://www.skype.com/"><i class="fa fa-skype"></i></a>
     </div>
 </footer>
-
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
