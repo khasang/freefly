@@ -19,7 +19,7 @@ public class NotificationTypes {
     @Column(name = "text_notification")
     private String textNotification;
 
-    @OneToMany(mappedBy = "notificationTypes", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Notification> notificationList = new ArrayList<>();
 
     public Long getId() {
