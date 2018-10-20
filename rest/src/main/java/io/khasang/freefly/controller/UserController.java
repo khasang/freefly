@@ -87,8 +87,8 @@ public class UserController {
 
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
     @ResponseBody
-    public User getUserById(@PathVariable(value = "id") String id) {
-        return userService.getUserById(Long.parseLong(id));
+    public UserDTO getUserDTOById(@PathVariable(value = "id") String id) {
+        return userService.getUserDTOById(Long.parseLong(id));
     }
 
     @RequestMapping(value = "/get/all", method = RequestMethod.GET, produces = "application/json;charset=utf-8")

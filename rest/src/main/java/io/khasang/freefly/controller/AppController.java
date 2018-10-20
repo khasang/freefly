@@ -40,12 +40,8 @@ public class AppController {
     }
 
     @RequestMapping("/")
-    public String getHelloPage(Model model) {
-        // nok
-//        message = new Message("asdasd");
-        model.addAttribute("message", message.getInfo());
-        model.addAttribute("call", callImpl.getInfo());
-        return "hello";
+    public String getHelloPage() {
+        return "helloPage";
     }
 
     /**
