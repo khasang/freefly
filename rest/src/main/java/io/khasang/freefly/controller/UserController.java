@@ -277,4 +277,45 @@ public class UserController {
         return "user/updating/login";
     }
 
+
+    @RequestMapping(value = "rest/check/password", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public boolean checkPasswordForValid(@RequestBody UserDTO userDTO){
+        return securityUtil.checkPassword(userDTO.getLogin(), userDTO.getPassword());
+    }
+
+    /**
+     * method for update authorized user's password
+     * @param password  new password
+     * @return
+     * throw NPE, if no user authorized
+     */
+    @RequestMapping(value = "/rest/update/password", method = RequestMethod.PUT, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public UserDTO updatePassword(@RequestBody String password) {
+        User currentUser = securityUtil.getAuthorizedUser();
+        currentUser.setPassword(new BCryptPasswordEncoder().encode(password));
+        currentUser = userService.updateUser(currentUser);
+        return utilDTO.getUserDTO(currentUser);
+    }
+
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    @RequestMapping("update/password")
+    public String getUpdatingPasswordPage(){
+        return "user/updating/password";
+    }
+
+
+
+    //----------------------------
+    /**
+     * method for testing code
+     * not for production!!!
+     */
+    @RequestMapping("/test")
+    public void test(){
+        securityUtil.checkPassword("login2", "111111");
+        securityUtil.checkPassword("login", "111111");
+        securityUtil.checkPassword("login", "11111");
+    }
 }
