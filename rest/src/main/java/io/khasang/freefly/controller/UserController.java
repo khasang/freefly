@@ -9,6 +9,7 @@ import io.khasang.freefly.service.UserService;
 import io.khasang.freefly.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -78,11 +79,11 @@ public class UserController {
      */
     @RequestMapping(value = "/add/nolocked", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
-    public User addNotLockedUser(@RequestBody User user) {
+    public UserDTO addNotLockedUser(@RequestBody User user) {
         user.setLock(false);
         List<Role> roleByDefault = roleService.getRoleByName(environment.getRequiredProperty("defaultRoleForNewUser"));
         user.setRoleList(roleByDefault);
-        return addUser(user);
+        return utilDTO.getUserDTO(addUser(user));
     }
 
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
@@ -149,7 +150,7 @@ public class UserController {
      * @param updatedUser new data for user
      * @return NO_ERROR if data correct or error's code
      */
-    @RequestMapping(value = "/checkforupdate", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/rest/check/for/update/info", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
     public Integer checkCorrectDataForUpdating(@RequestBody User updatedUser) {
         //if exists user with specific id
@@ -201,7 +202,11 @@ public class UserController {
         return email.matches("(.+)@(.+)\\.(.+)");
     }
 
-    @RequestMapping(value = "/security/authentication", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    /**
+     * for getting info about
+     * @return
+     */
+    @RequestMapping(value = "/rest/security/authentication/current", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
     @ResponseBody
     public UserDTO getAboutAutorizedUser() {
         User userFromDB = securityUtil.getAuthorizedUser();
@@ -212,13 +217,13 @@ public class UserController {
     /**
      * method for updating info about user
      * info for updating:
-     * login, email, firstName, lastName
+     * email, firstName, lastName
      *
      * @param user contains data for updating
      * @return updated user.
      * throws IEA with reason's code in message specific in method checkCorrectDataForCreation's doc
      */
-    @RequestMapping(value = "/updateinfo", method = RequestMethod.PUT, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/rest/update/info", method = RequestMethod.PUT, produces = "application/json;charset=utf-8")
     @ResponseBody
     public UserDTO updateInfoAboutUser(@RequestBody User user) {
         int code = checkCorrectDataForUpdating(user);
@@ -234,4 +239,11 @@ public class UserController {
             throw new IllegalArgumentException("User can not be updated. Code reason = " + code);
         }
     }
+
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    @RequestMapping("/update/info")
+    public String getUpdatingPage(){
+        return "user/updating/info";
+    }
+
 }

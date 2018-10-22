@@ -3,7 +3,7 @@
 
 <head>
     <title>FreeFly. Registration Form.</title>
-    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <script src="js/jquery-3.3.1.min.js" type="text/javascript"></script>
     <script src="js/registration.js" type="text/javascript"></script>
 </head>
 

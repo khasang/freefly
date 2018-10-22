@@ -2,7 +2,7 @@ var idUser;
 var login;
 
 var GettingInfoAboutUser = function () {
-    var service = 'http://localhost:8080/user/security/authentication';
+    var service = 'http://localhost:8080/user/rest/security/authentication/current';
 
     $.ajax({
         type: 'GET',
@@ -34,7 +34,7 @@ var UpdateUser = function (email, name, lastName) {
 
     $.ajax({
         type: "POST",
-        url: "http://localhost:8080/user/checkforupdate",
+        url: "http://localhost:8080/user/rest/check/for/update/info",
         contentType: "application/json;utf-8",
         data: JSON.stringify(JSONObject),
         dataType: "json",
@@ -46,7 +46,7 @@ var UpdateUser = function (email, name, lastName) {
                 //data is correct, update user
                 $.ajax({
                     type: "PUT",
-                    url: "http://localhost:8080/user/updateinfo",
+                    url: "http://localhost:8080/user/rest/update/info",
                     contentType: "application/json;utf-8",
                     data: JSON.stringify(JSONObject),
                     dataType: "json",

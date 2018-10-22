@@ -16,7 +16,6 @@ public class SecurityUtil {
     /**
      * method for getting authorized user
      * @return authorized user
-     * !!!TODO throws NPE if no authentication object is found
      */
     public User getAuthorizedUser(){
         try {

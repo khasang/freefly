@@ -3,9 +3,6 @@
 
 <head>
     <title>FreeFly. Updating registration data</title>
-    <script src="js/updating_user.js" type="text/javascript"></script>
-    <script src="js/jquery.min.js" type="text/javascript"></script>
-    <script src="js/registration.js" type="text/javascript"></script>
 </head>
 
 <body onload="GettingInfoAboutUser()">
@@ -35,5 +32,10 @@
 
 --------------------------------------------
 <div class="panel-body" id="response"></div>
+
+<script src="../../js/registration.js" type="text/javascript"></script>
+<script src="../../js/updating_user.js" type="text/javascript"></script>
+<script src="../../js/jquery.min.js" type="text/javascript"></script>
+
 </body>
 </html>
