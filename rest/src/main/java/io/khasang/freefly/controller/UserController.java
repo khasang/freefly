@@ -246,4 +246,35 @@ public class UserController {
         return "user/updating/info";
     }
 
+    /**
+     * method for updating login
+     * @param aboutNewLogin container for data: user's id = aboutNewLogin.getId(), new user's login = aboutNewLogin.getLogin()
+     * @return dto about user. Able throws IAE, in case not unique login
+     */
+    @RequestMapping(value = "/rest/update/login", method = RequestMethod.PUT, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public UserDTO updateLogin(@RequestBody UserDTO aboutNewLogin) {
+        User userInDb = userService.getUserById(aboutNewLogin.getId());
+        userInDb.setLogin(aboutNewLogin.getLogin());
+        userInDb = updateUser(userInDb);
+        return utilDTO.getUserDTO(userInDb);
+    }
+
+    /**
+     * method for definition unique login
+     * @param login
+     * @return true, if not exists user with specific login, else false
+     */
+    @RequestMapping(value = "/rest/check/unique/login/{value}")
+    @ResponseBody
+    public boolean checkUniqueLogin(@PathVariable (value = "value") String login){
+        return Objects.isNull(userService.getUserByLogin(login));
+    }
+
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    @RequestMapping("/update/login")
+    public String getUpdatingLoginPage(){
+        return "user/updating/login";
+    }
+
 }

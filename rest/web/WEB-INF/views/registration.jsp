@@ -49,8 +49,8 @@ Fill the form, please:
 <br>
 <table>
     <tr>
-        <th>Cod</th>
-        <th>Insert cod value</th>
+        <th>Code</th>
+        <th>Insert code value</th>
     </tr>
     <tr>
         <td>
