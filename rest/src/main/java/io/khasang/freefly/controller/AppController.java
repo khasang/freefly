@@ -1,8 +1,11 @@
 package io.khasang.freefly.controller;
 
+import io.khasang.freefly.dto.UserDTO;
+import io.khasang.freefly.entity.User;
 import io.khasang.freefly.model.Call;
 import io.khasang.freefly.model.CreateTable;
 import io.khasang.freefly.model.Message;
+import io.khasang.freefly.service.UserService;
 import io.khasang.freefly.util.CheckText;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,15 +13,12 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.ModelAndView;
 
 import java.net.MalformedURLException;
+import java.util.Objects;
 
 // controller MVC
 @Controller
@@ -30,13 +30,15 @@ public class AppController {
     private final Call callImpl;
     private final CreateTable createTable;
     private final CheckText checkText;
+    private final UserService userService;
 
     @Autowired
-    public AppController(Call callImpl, Message message, CreateTable createTable, CheckText checkText) {
+    public AppController(Call callImpl, Message message, CreateTable createTable, CheckText checkText, UserService userService) {
         this.callImpl = callImpl;
         this.message = message;
         this.createTable = createTable;
         this.checkText = checkText;
+        this.userService = userService;
     }
 
     @RequestMapping("/")
@@ -92,6 +94,32 @@ public class AppController {
     @RequestMapping("/registration")
     public String getRegistrationPage(){
         return "registration";
+    }
+
+    @RequestMapping("/users/update/password")
+    public String getUpdatingPasswordPage(){
+        return "user/updating/password_by_admin";
+    }
+
+    /**
+     * method for update password for user by admin
+     * @param infoAboutPassword container for info about required login and password
+     *        infoAboutPassword.getLogin()  - user's login, which required
+     *        infoAboutPassword.getPassword() - new password
+     * @return true on success, other false
+     */
+    // @Secured("ROLE_ADMIN")
+    @RequestMapping(method = RequestMethod.PUT, path = "/rest/users/change/password", produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public boolean changePassword(@RequestBody UserDTO infoAboutPassword){
+        User userInDb = userService.getUserByLogin(infoAboutPassword.getLogin());
+        if (Objects.isNull(userInDb)) {
+            return false;
+        } else {
+            userInDb.setPassword(new BCryptPasswordEncoder().encode(infoAboutPassword.getPassword()));
+            userService.updateUser(userInDb);
+            return true;
+        }
     }
 
 }
