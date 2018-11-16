@@ -209,7 +209,7 @@ public class UserController {
     @RequestMapping(value = "/rest/security/authentication/current", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
     @ResponseBody
     public UserDTO getAboutAutorizedUser() {
-        User userFromDB = securityUtil.getAuthorizedUser();
+        User userFromDB = userService.getUserByLogin(securityUtil.getAuthorizedUser());
         UserDTO aboutUser = utilDTO.getUserDTO(userFromDB);
         return aboutUser;
     }
@@ -293,7 +293,7 @@ public class UserController {
     @RequestMapping(value = "/rest/update/password", method = RequestMethod.PUT, produces = "application/json;charset=utf-8")
     @ResponseBody
     public UserDTO updatePassword(@RequestBody String password) {
-        User currentUser = securityUtil.getAuthorizedUser();
+        User currentUser = userService.getUserByLogin(securityUtil.getAuthorizedUser());
         currentUser.setPassword(new BCryptPasswordEncoder().encode(password));
         currentUser = userService.updateUser(currentUser);
         return utilDTO.getUserDTO(currentUser);
