@@ -32,7 +32,6 @@ public class AppController {
     private final CheckText checkText;
     private final UserService userService;
 
-    @Autowired
     public AppController(Call callImpl, Message message, CreateTable createTable, CheckText checkText, UserService userService) {
         this.callImpl = callImpl;
         this.message = message;

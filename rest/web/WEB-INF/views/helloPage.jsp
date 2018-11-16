@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <html lang="en">
@@ -27,18 +28,18 @@
             <a href="/"><img src="images/logo.png" alt="logo"/></a>
         </nav>
         <div class="header__section">
+            <div class="header__item headerButton"><a>Hello, ${author}!</a></div>
             <div class="header__item headerButton"><a href="/registration">Регистрация</a></div>
             <div class="header__item headerButton"><a href="/login">Войти</a></div>
+            <c:if test="${pageContext.request.userPrincipal.name != null}">
+                <div class="header__item headerButton"><a href="/logout">Выйти</a></div>
+            </c:if>
         </div>
     </div>
 </header>
 
 
-
-
 <section>
-
-
 
 
 </section>
@@ -56,10 +57,10 @@
     </div>
 </footer>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="js/jquery-3.3.1.min.js" type="text/javascript"></script>
-    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="js/jquery-3.3.1.min.js" type="text/javascript"></script>
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
 </body>
 </html>
 
