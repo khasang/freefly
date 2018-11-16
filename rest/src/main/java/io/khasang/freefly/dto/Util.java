@@ -1,6 +1,7 @@
 package io.khasang.freefly.dto;
 
 import io.khasang.freefly.entity.Order;
+import io.khasang.freefly.entity.User;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,5 +23,18 @@ public class Util {
         orderDTO.setCreationDate(order.getCreationDate());
         orderDTO.setModificationDate(order.getModificationDate());
         return orderDTO;
+    }
+
+
+    public UserDTO getUserDTO(User user) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId());
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setLastName(user.getLastName());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setLogin(user.getLogin());
+        userDTO.setPassword(user.getPassword());
+        userDTO.setLock(user.isLock());
+        return userDTO;
     }
 }

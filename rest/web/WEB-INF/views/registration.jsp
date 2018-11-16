@@ -3,7 +3,7 @@
 
 <head>
     <title>FreeFly. Registration Form.</title>
-    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <script src="js/jquery-3.3.1.min.js" type="text/javascript"></script>
     <script src="js/registration.js" type="text/javascript"></script>
 </head>
 
@@ -49,8 +49,8 @@ Fill the form, please:
 <br>
 <table>
     <tr>
-        <th>Cod</th>
-        <th>Insert cod value</th>
+        <th>Code</th>
+        <th>Insert code value</th>
     </tr>
     <tr>
         <td>
