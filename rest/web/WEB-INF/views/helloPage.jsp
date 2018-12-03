@@ -28,14 +28,14 @@
             <a href="/"><img src="images/logo.png" alt="logo"/></a>
         </nav>
         <div class="header__section">
-            <div class="header__item headerButton"><a>Hello, ${author}!</a></div>
-            <div class="header__item headerButton"><a href="/registration">Регистрация</a></div>
+            <div class="header__item headerButton"><a>Hello, ${user}!</a></div>
+            <div class="header__item headerButton"><a href="/registration">Sign In</a></div>
             <c:if test="${pageContext.request.userPrincipal.name == null}">
-                <div class="header__item headerButton"><a href="/login">Войти</a></div>
+                <div class="header__item headerButton"><a href="/login">Login</a></div>
             </c:if>
 
             <c:if test="${pageContext.request.userPrincipal.name != null}">
-                <div class="header__item headerButton"><a href="/logout">Выйти</a></div>
+                <div class="header__item headerButton"><a href="/logout">Logout</a></div>
             </c:if>
         </div>
     </div>

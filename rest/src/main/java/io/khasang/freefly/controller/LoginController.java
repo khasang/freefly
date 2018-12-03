@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Controller
 public class LoginController {
@@ -33,9 +34,9 @@ public class LoginController {
     public ModelAndView getHelloPage() {
         ModelAndView model = new ModelAndView();
         if ("anonymousUser".equals(securityUtil.getAuthorizedUser())) {
-            model.addObject("author", "Guest");
+            model.addObject("user", "Guest");
         } else {
-            model.addObject("author", securityUtil.getAuthorizedUser());
+            model.addObject("user", securityUtil.getAuthorizedUser());
         }
         model.setViewName("helloPage");
         return model;
@@ -52,18 +53,5 @@ public class LoginController {
         }
         model.setViewName("login");
         return model;
-    }
-
-    /**
-     * User logout
-     */
-    @RequestMapping(value = {"/logout"})
-    public String getLogoutPage(HttpServletRequest request, HttpServletResponse response) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (securityUtil.getAuthorizedUser() != null) {
-            new SecurityContextLogoutHandler().logout(request, response, auth);
-        }
-
-        return "redirect:/login?logout";
     }
 }
