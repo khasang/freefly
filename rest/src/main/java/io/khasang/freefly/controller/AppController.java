@@ -7,16 +7,20 @@ import io.khasang.freefly.model.CreateTable;
 import io.khasang.freefly.model.Message;
 import io.khasang.freefly.service.UserService;
 import io.khasang.freefly.util.CheckText;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.net.MalformedURLException;
 import java.util.Objects;
 
@@ -32,31 +36,12 @@ public class AppController {
     private final CheckText checkText;
     private final UserService userService;
 
-    @Autowired
     public AppController(Call callImpl, Message message, CreateTable createTable, CheckText checkText, UserService userService) {
         this.callImpl = callImpl;
         this.message = message;
         this.createTable = createTable;
         this.checkText = checkText;
         this.userService = userService;
-    }
-
-    @RequestMapping("/")
-    public String getHelloPage() {
-        return "helloPage";
-    }
-
-    /**
-     * User login
-     */
-    @RequestMapping(value = {"/login"})
-    public ModelAndView login(@RequestParam(value = "error", required = false) String error) {
-        ModelAndView model = new ModelAndView();
-        if (error != null) {
-            model.addObject("error", "Invalid username or password!");
-        }
-        model.setViewName("login");
-        return model;
     }
 
     @RequestMapping("/create")
@@ -92,26 +77,27 @@ public class AppController {
     }
 
     @RequestMapping("/registration")
-    public String getRegistrationPage(){
+    public String getRegistrationPage() {
         return "registration";
     }
 
     @RequestMapping("/users/update/password")
-    public String getUpdatingPasswordPage(){
+    public String getUpdatingPasswordPage() {
         return "user/updating/password_by_admin";
     }
 
     /**
      * method for update password for user by admin
+     *
      * @param infoAboutPassword container for info about required login and password
-     *        infoAboutPassword.getLogin()  - user's login, which required
-     *        infoAboutPassword.getPassword() - new password
+     *                          infoAboutPassword.getLogin()  - user's login, which required
+     *                          infoAboutPassword.getPassword() - new password
      * @return true on success, other false
      */
     // @Secured("ROLE_ADMIN")
     @RequestMapping(method = RequestMethod.PUT, path = "/rest/users/change/password", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public boolean changePassword(@RequestBody UserDTO infoAboutPassword){
+    public boolean changePassword(@RequestBody UserDTO infoAboutPassword) {
         User userInDb = userService.getUserByLogin(infoAboutPassword.getLogin());
         if (Objects.isNull(userInDb)) {
             return false;
@@ -122,4 +108,17 @@ public class AppController {
         }
     }
 
+    /**
+     * return current authentication user
+     */
+    private String getCurrentUser() {
+        String username;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        return username;
+    }
 }

@@ -25,8 +25,13 @@
                 <input id="password" name="j_password" required="required" type="password" placeholder="password"/>
             </p>
             <p>
-                <c:if test="${not empty error}">
-            <div class="error" style="text-align: center;">${error}</div>
+            <c:if test="${not empty error}">
+                <div class="error" style="text-align: center;">${error}</div>
+            </c:if>
+            <c:if test="${param.logout != null}">
+                <div class="alert alert-success">
+                    <p>You have been logged out successfully.</p>
+                </div>
             </c:if>
             </p>
             <p class="keeplogin">

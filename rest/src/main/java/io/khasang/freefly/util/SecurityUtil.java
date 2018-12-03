@@ -18,15 +18,20 @@ public class SecurityUtil {
 
     /**
      * method for getting authorized user
+     *
      * @return authorized user
      */
-    public User getAuthorizedUser(){
+    public String getAuthorizedUser() {
+        String userName;
         try {
-            String login = ((UserDetails) (SecurityContextHolder.getContext().getAuthentication().getPrincipal())).getUsername();
-            User user = userService.getUserByLogin(login);
-            return user;
-        } catch (Exception e)
-        {
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (principal instanceof UserDetails) {
+                userName = ((UserDetails) principal).getUsername();
+            } else {
+                userName = principal.toString();
+            }
+            return userName;
+        } catch (Exception e) {
             e.printStackTrace();
             throw new NullPointerException();
         }
@@ -34,14 +39,14 @@ public class SecurityUtil {
 
     /**
      * method for verification password for specific user
+     *
      * @param login
      * @param password
      * @return if not exists user with specific login, returns false,
      * else
      * true if password is correct for user with specific login, else false
-     *
      */
-    public boolean checkPassword(String login, String password){
+    public boolean checkPassword(String login, String password) {
         User user = userService.getUserByLogin(login);
         if (Objects.isNull(user)) {
             return false;
