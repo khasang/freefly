@@ -1,10 +1,13 @@
 package io.khasang.freefly.entity;
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "securitylog")
+@Component
 public class SecurityLog {
 
     @Id

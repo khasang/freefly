@@ -29,7 +29,7 @@
         </nav>
         <div class="header__section">
             <div class="header__item headerButton"><a>Hello, ${user}!</a></div>
-            <div class="header__item headerButton"><a href="/registration">Sign In</a></div>
+            <div class="header__item headerButton"><a href="/registration">Registration</a></div>
             <c:if test="${pageContext.request.userPrincipal.name == null}">
                 <div class="header__item headerButton"><a href="/login">Login</a></div>
             </c:if>

@@ -1,11 +1,14 @@
 package io.khasang.freefly.entity;
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "events")
+@Component
 public class Event {
 
     @Id
