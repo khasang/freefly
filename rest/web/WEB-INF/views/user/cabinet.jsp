@@ -18,7 +18,7 @@
     <!-- Favicon -->
     <link href="favicon/favicon.ico" rel="shortcut icon" type="image/x-icon">
 
-    <title>Freefly</title>
+    <title>Freefly. Private cabinet/</title>
 </head>
 <body>
 
@@ -28,7 +28,7 @@
             <a href="/"><img src="images/logo.png" alt="logo"/></a>
         </nav>
         <div class="header__section">
-           Hello, ${user}!
+            <div class="header__item headerButton"><a>Hello, ${user}!</a></div>
 
             <c:if test="${pageContext.request.userPrincipal.name == null}">
                 <div class="header__item headerButton"><a href="/registration">Registration</a></div>
@@ -42,27 +42,14 @@
     </div>
 </header>
 
-<section class="data">
+<section class = "data">
 
-    <section class="links">
-        <c:if test="${pageContext.request.userPrincipal.name != null}">
-            <ul>
-                <li>
-                    Private data
-                    <ul>
-                        <li><a href="/user/update/info">Edit date</a></li>
-                        <li><a href="/user/update/login">Edit login</a></li>
-                        <li><a href="/user/update/password">Change password</a></li>
-                    </ul>
-                </li>
-                <li>
-                    etc
-                </li>
-            </ul>
-        </c:if>
+    <section class = "cabinet">
+        <h3>Private cabinet</h3>
+        <p><a href="/user/update/info">Edit private date</a></p>
+        <p><a href="/user/update/password">Edit password</a></p>
+        <p><a href="/user/update/login">Change login</a></p>
     </section>
-
-</section>
 
 <footer class="footer">
     <div class="container text-right">
@@ -79,5 +66,3 @@
 <script src="js/bootstrap.min.js" type="text/javascript"></script>
 </body>
 </html>
-
-

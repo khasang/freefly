@@ -7,6 +7,7 @@ import io.khasang.freefly.model.CreateTable;
 import io.khasang.freefly.model.Message;
 import io.khasang.freefly.service.UserService;
 import io.khasang.freefly.util.CheckText;
+import io.khasang.freefly.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
@@ -35,13 +36,15 @@ public class AppController {
     private final CreateTable createTable;
     private final CheckText checkText;
     private final UserService userService;
+    private final SecurityUtil securityUtil;
 
-    public AppController(Call callImpl, Message message, CreateTable createTable, CheckText checkText, UserService userService) {
+    public AppController(Call callImpl, Message message, CreateTable createTable, CheckText checkText, UserService userService, SecurityUtil securityUtil) {
         this.callImpl = callImpl;
         this.message = message;
         this.createTable = createTable;
         this.checkText = checkText;
         this.userService = userService;
+        this.securityUtil = securityUtil;
     }
 
     @RequestMapping("/create")
@@ -120,5 +123,21 @@ public class AppController {
             username = principal.toString();
         }
         return username;
+    }
+
+    /**
+     *
+     * @return user's private cabinet page
+     */
+    @RequestMapping("/cabinet")
+    public ModelAndView getCabinetPage(){
+        ModelAndView model = new ModelAndView();
+        if ("anonymousUser".equals(securityUtil.getAuthorizedUser())) {
+            model.addObject("user", "Guest");
+        } else {
+            model.addObject("user", securityUtil.getAuthorizedUser());
+        }
+        model.setViewName("/user/cabinet");
+        return model;
     }
 }

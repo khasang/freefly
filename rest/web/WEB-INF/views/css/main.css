@@ -61,10 +61,22 @@ footer{
     border-left: 2px solid #819698;
 }
 .footer a:hover {
-    color: white;
+   color: white;
 }
 
+section a {
+    color: #819698;
+}
 
+.links {
+    border-style: groove;
+    padding-left: 10px;
+}
+
+.cabinet {
+    border-style: inset;
+    padding-left: 10px;
+}
 
 
 
