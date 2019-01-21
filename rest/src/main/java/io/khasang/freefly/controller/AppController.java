@@ -125,19 +125,4 @@ public class AppController {
         return username;
     }
 
-    /**
-     *
-     * @return user's private cabinet page
-     */
-    @RequestMapping("/cabinet")
-    public ModelAndView getCabinetPage(){
-        ModelAndView model = new ModelAndView();
-        if ("anonymousUser".equals(securityUtil.getAuthorizedUser())) {
-            model.addObject("user", "Guest");
-        } else {
-            model.addObject("user", securityUtil.getAuthorizedUser());
-        }
-        model.setViewName("/user/cabinet");
-        return model;
-    }
 }
