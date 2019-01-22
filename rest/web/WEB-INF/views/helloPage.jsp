@@ -28,9 +28,10 @@
             <a href="/"><img src="images/logo.png" alt="logo"/></a>
         </nav>
         <div class="header__section">
-            <div class="header__item headerButton"><a>Hello, ${user}!</a></div>
-            <div class="header__item headerButton"><a href="/registration">Sign In</a></div>
+           Hello, ${user}!
+
             <c:if test="${pageContext.request.userPrincipal.name == null}">
+                <div class="header__item headerButton"><a href="/registration">Registration</a></div>
                 <div class="header__item headerButton"><a href="/login">Login</a></div>
             </c:if>
 
@@ -41,12 +42,27 @@
     </div>
 </header>
 
+<section class="data">
 
-<section>
-
+    <section class="links">
+        <c:if test="${pageContext.request.userPrincipal.name != null}">
+            <ul>
+                <li>
+                    Private data
+                    <ul>
+                        <li><a href="/user/update/info">Edit date</a></li>
+                        <li><a href="/user/update/login">Edit login</a></li>
+                        <li><a href="/user/update/password">Change password</a></li>
+                    </ul>
+                </li>
+                <li>
+                    etc
+                </li>
+            </ul>
+        </c:if>
+    </section>
 
 </section>
-
 
 <footer class="footer">
     <div class="container text-right">
