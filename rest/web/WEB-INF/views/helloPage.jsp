@@ -50,7 +50,7 @@
                 <li>
                     Private data
                     <ul>
-                        <li><a href="/user/update/info">Edit date</a></li>
+                        <li><a href="/user/update/info">Edit user's data</a></li>
                         <li><a href="/user/update/login">Edit login</a></li>
                         <li><a href="/user/update/password">Change password</a></li>
                     </ul>
