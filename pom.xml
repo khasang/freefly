@@ -17,7 +17,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <spring.version>4.3.18.RELEASE</spring.version>
+        <spring.version>5.2.20.RELEASE</spring.version>
         <javax.version>3.0.1</javax.version>
         <jstl.version>1.2</jstl.version>
         <!--<postgre.version>9.4.1212.jre7</postgre.version>-->
